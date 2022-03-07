@@ -10,7 +10,7 @@ import javax.persistence.Id;
 //le @Data permet de faire la génération des get/set automatiquement
 @Entity
 @Data
-public class Utilisateur {
+public class Intervenant {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

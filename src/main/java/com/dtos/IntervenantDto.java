@@ -3,7 +3,7 @@ package com.dtos;
 import lombok.Data;
 
 @Data
-public class UtilisateurDto {
+public class IntervenantDto {
 
     private Long id;
     private String login;
