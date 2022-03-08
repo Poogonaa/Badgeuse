@@ -27,14 +27,14 @@ public class CoursServiceImpl implements CoursService {
     }
 
     @Override
-    public CoursDto getCoursById(Long coursId) {
-        Cours cours = coursRepository.findById(coursId).orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
+    public CoursDto getCoursById(CoursDto coursDto) {
+        Cours cours = coursRepository.findById(coursDto.getId()).orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
         return coursEntityToDto(cours);
     }
 
     @Override
-    public boolean deleteCours(Long coursId) {
-        coursRepository.deleteById(coursId);
+    public boolean deleteCours(CoursDto coursDto) {
+        coursRepository.deleteById(coursDto.getId());
         return true;
     }
 

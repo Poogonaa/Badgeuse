@@ -1,6 +1,7 @@
 package com.controllers;
 
 import com.dtos.CoursDto;
+import com.dtos.Filiere_langueDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.services.impl.CoursServiceImpl;
@@ -17,14 +18,14 @@ public class CoursController {
         this.coursService = coursService;
     }
 
-    @GetMapping
+    @GetMapping("/multi")
     public List<CoursDto> getAllCours() {
         return coursService.getAllCours();
     }
 
-    @GetMapping("/{id}")
-    public CoursDto getCours(@PathVariable Long id){
-        return coursService.getCoursById(id);
+    @GetMapping("/mono")
+    public CoursDto getCours(final @RequestBody CoursDto coursDto){
+        return coursService.getCoursById(coursDto);
     }
 
     @PostMapping
@@ -32,9 +33,9 @@ public class CoursController {
         return coursService.addCours(coursDto);
     }
 
-    @DeleteMapping("/{id}")
-    public Boolean deleteCours(@PathVariable Long id){
-        return coursService.deleteCours(id);
+    @DeleteMapping
+    public Boolean deleteCours(final @RequestBody CoursDto coursDto){
+        return coursService.deleteCours(coursDto);
     }
 
     @PutMapping

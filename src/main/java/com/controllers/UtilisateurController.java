@@ -16,12 +16,12 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
-    @GetMapping("/tout")
+    @GetMapping("/multi")
     public List<UtilisateurDto> getUtilisateur() {
         return utilisateurService.getAllUtilisateurs();
     }
 
-    @GetMapping("/un")
+    @GetMapping("/mono")
     public UtilisateurDto getUtilisateur(final @RequestBody UtilisateurDto utilisateurDto){
         return utilisateurService.getUtilisateurById(utilisateurDto);
     }

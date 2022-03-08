@@ -9,9 +9,9 @@ public interface CoursService {
 
     CoursDto addCours(CoursDto coursDto);
 
-    CoursDto getCoursById(Long coursId);
+    CoursDto getCoursById(CoursDto coursDto);
 
-    boolean deleteCours(Long coursId);
+    boolean deleteCours(CoursDto coursDto);
 
     List<CoursDto> getAllCours();
 

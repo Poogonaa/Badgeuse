@@ -21,12 +21,12 @@ public class Filiere_langueController {
         return filiere_langueService.addFiliere_langue(filiere_langueDto);
     }
 
-    @GetMapping("/tout")
+    @GetMapping("/multi")
     public List<Filiere_langueDto> getFiliere_langue() {
         return filiere_langueService.getAllFiliere_langues();
     }
 
-    @GetMapping("/un")
+    @GetMapping("/mono")
     public Filiere_langueDto getFiliere_langue(final @RequestBody Filiere_langueDto filiere_langueDto){
         return filiere_langueService.getFiliere_langueById(filiere_langueDto);
     }
