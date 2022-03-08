@@ -19,7 +19,7 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
 
     @Override
     public SeanceFormationDto getSeanceFormationById(SeanceFormationDto seanceFormationDto) {
-        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getId()).orElseThrow(()-> new EntityNotFoundException("Seance not found"))
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getId()).orElseThrow(()-> new EntityNotFoundException("Seance not found"));
         return seanceFormationEntityToDto(seanceFormation);
     }
 
