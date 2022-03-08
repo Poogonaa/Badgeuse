@@ -12,9 +12,8 @@ public class Cours {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String intitule;
-   @OneToMany
-    private List<Creneau> mesCreneau;
     @OneToMany
-    private List<Intervenant> mesVacataires;
-
+    private List<Creneau> mesCreneau;
+    @ManyToMany
+    private List<Intervenant> Intvenants;
 }

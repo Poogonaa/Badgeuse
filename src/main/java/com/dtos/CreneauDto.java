@@ -9,4 +9,5 @@ public class CreneauDto {
     private Integer duree;
     private String type;
     private  String salle;
+    private CoursDto coursDto;
 }
