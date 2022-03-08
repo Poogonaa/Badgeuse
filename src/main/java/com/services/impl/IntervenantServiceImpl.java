@@ -5,53 +5,25 @@ import com.dtos.UtilisateurDto;
 import com.entities.Intervenant;
 import com.entities.Utilisateur;
 import com.repositories.UtilisateurRepository;
-import com.services.UtilisateurService;
+import com.services.IntervenantService;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+@Service("intervenantService")
+public class IntervenantServiceImpl extends UtilisateurServiceImpl implements IntervenantService {
 
-@Service("utilisateurService")
-public class UtilisateurServiceImpl implements UtilisateurService {
-
-    private final UtilisateurRepository utilisateurRepository;
-
-    public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository){
-        this.utilisateurRepository = utilisateurRepository;
+    public IntervenantServiceImpl(UtilisateurRepository utilisateurRepository){
+        super(utilisateurRepository);
     }
 
     @Override
-    public UtilisateurDto addUtilisateur(UtilisateurDto utilisateurDto) {
-        Utilisateur utilisateur = utilisateurDtoToEntity(utilisateurDto);
+    public UtilisateurDto addIntervenant(UtilisateurDto utilisateurDto) {
+        Utilisateur utilisateur = intervenantDtoToEntity(utilisateurDto);
         utilisateur = utilisateurRepository.save(utilisateur);
-        return utilisateurEntityToDto(utilisateur);
+        return intervenantEntityToDto(utilisateur);
     }
 
-    @Override
-    public UtilisateurDto getUtilisateurById(Long utilisateurId) {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
-        return utilisateurEntityToDto(utilisateur);
-    }
-
-    @Override
-    public boolean deleteUtilisateur(Long utilisateurId) {
-        utilisateurRepository.deleteById(utilisateurId);
-        return true;
-    }
-
-    @Override
-    public List<UtilisateurDto> getAllUtilisateurs() {
-        List<UtilisateurDto> utilisateurDtos = new ArrayList<>();
-        List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
-        utilisateurs.forEach(utilisateur -> {
-            utilisateurDtos.add(utilisateurEntityToDto(utilisateur));
-        });
-        return utilisateurDtos;
-    }
-
-    Utilisateur utilisateurDtoToEntity(UtilisateurDto utilisateurDto){
-        Utilisateur utilisateur = new Utilisateur();
+    private Utilisateur intervenantDtoToEntity(UtilisateurDto utilisateurDto){
+        Utilisateur utilisateur = new Intervenant();
         utilisateur.setId(utilisateurDto.getId());
         utilisateur.setLogin(utilisateurDto.getLogin());
         utilisateur.setMdp(utilisateurDto.getMdp());
@@ -61,8 +33,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return utilisateur;
     }
 
-    UtilisateurDto utilisateurEntityToDto(Utilisateur utilisateur){
-        UtilisateurDto utilisateurDto = new UtilisateurDto();
+    private UtilisateurDto intervenantEntityToDto(Utilisateur utilisateur){
+        UtilisateurDto utilisateurDto = new IntervenantDto();
         utilisateurDto.setId(utilisateur.getId());
         utilisateurDto.setLogin(utilisateur.getLogin());
         utilisateurDto.setMdp(utilisateur.getMdp());

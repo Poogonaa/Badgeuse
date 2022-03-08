@@ -1,2 +1,7 @@
-package com.entities;public class Gestionnaire {
+package com.entities;
+
+import javax.persistence.Entity;
+
+@Entity
+public class Gestionnaire extends Utilisateur{
 }

@@ -1,2 +1,4 @@
-package com.dtos;public class IntervenantDto {
+package com.dtos;
+
+public class IntervenantDto extends UtilisateurDto{
 }
