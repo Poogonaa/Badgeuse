@@ -48,7 +48,13 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormation = seanceFormationRepository.save(seanceFormation);
         return seanceFormationEntityToDto(seanceFormation);
     }
-    
+
+    @Override
+    public SeanceFormationDto addSeanceFormation(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationDtoToEntity(seanceFormationDto);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
 
     private SeanceFormationDto seanceFormationEntityToDto(SeanceFormation seanceFormation){
         SeanceFormationDto seanceFormationDto = new SeanceFormationDto();

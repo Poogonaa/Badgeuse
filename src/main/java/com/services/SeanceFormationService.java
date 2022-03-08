@@ -12,4 +12,6 @@ public interface SeanceFormationService {
     List<SeanceFormationDto> getAllSeancesFormations();
 
     SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFromationDto);
+
+    SeanceFormationDto addSeanceFormation(SeanceFormationDto seanceFormationDto);
 }
