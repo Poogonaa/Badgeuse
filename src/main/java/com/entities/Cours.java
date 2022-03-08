@@ -12,9 +12,9 @@ public class Cours {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String intitule;
-    @OneToMany
+   @OneToMany
     private List<Creneau> mesCreneau;
     @OneToMany
-    private List<Vacataire> mesVacataires;
+    private List<Intervenant> mesVacataires;
 
 }
