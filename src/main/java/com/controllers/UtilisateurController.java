@@ -1,7 +1,6 @@
 package com.controllers;
 
 import com.dtos.UtilisateurDto;
-import com.services.impl.GestionnaireServiceImpl;
 import com.services.impl.UtilisateurServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +16,12 @@ public class UtilisateurController {
         this.utilisateurService = utilisateurService;
     }
 
-    @GetMapping("/tout")
-    public List<UtilisateurDto> getUtilisateurs() {
+    @GetMapping("/multi")
+    public List<UtilisateurDto> getUtilisateur() {
         return utilisateurService.getAllUtilisateurs();
     }
 
-    @GetMapping("/un")
+    @GetMapping("/mono")
     public UtilisateurDto getUtilisateur(final @RequestBody UtilisateurDto utilisateurDto){
         return utilisateurService.getUtilisateurById(utilisateurDto);
     }
