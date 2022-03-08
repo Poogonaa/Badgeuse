@@ -14,7 +14,6 @@ public class Cours {
     private String intitule;
     @OneToMany
     private List<Creneau> mesCreneau;
-    @OneToMany
-    private List<Vacataire> mesVacataires;
-
+    @ManyToMany
+    private List<Intervenant> Intvenants;
 }

@@ -6,7 +6,6 @@ import com.dtos.CoursDto;
 import java.util.List;
 
 public interface CoursService {
-
     CoursDto addCours(CoursDto coursDto);
 
     CoursDto getCoursById(CoursDto coursDto);
@@ -16,6 +15,4 @@ public interface CoursService {
     List<CoursDto> getAllCours();
 
     CoursDto editCours(CoursDto coursDto);
-
-
 }

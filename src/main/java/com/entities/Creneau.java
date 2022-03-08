@@ -3,18 +3,16 @@ package com.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
-public class Filiere_langue {
-
+public class Creneau {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String code;
-    private String nom;
+    private String date_heure;
+    private Integer duree;
+    private String type;
+    private  String salle;
     @ManyToOne
-    private Composante composante;
-    @ManyToMany
-    private List<Cours> cours;
+    private Cours cours;
 }

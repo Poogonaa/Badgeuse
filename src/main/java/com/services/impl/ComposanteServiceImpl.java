@@ -20,7 +20,6 @@ public class ComposanteServiceImpl implements ComposanteService {
 
     @Override
     public ComposanteDto getComposanteById(ComposanteDto composanteDto) {
-
         Composante composante = composanteRepository.findById(composanteDto.getId()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         return composanteEntityToDto(composante);
     }
