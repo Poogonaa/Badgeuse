@@ -1,7 +1,6 @@
 package com.controllers;
 
 import com.dtos.UtilisateurDto;
-import com.services.impl.GestionnaireServiceImpl;
 import com.services.impl.UtilisateurServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,7 @@ public class UtilisateurController {
     }
 
     @GetMapping("/tout")
-    public List<UtilisateurDto> getUtilisateurs() {
+    public List<UtilisateurDto> getUtilisateur() {
         return utilisateurService.getAllUtilisateurs();
     }
 
