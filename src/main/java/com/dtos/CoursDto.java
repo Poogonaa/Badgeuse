@@ -6,9 +6,9 @@ import java.util.List;
 
 @Data
 public class CoursDto {
-
-    private Long id;
+    private Long cou_id;
     private String intitule;
-    private List<CreneauDto> CreneauxDto;
-    private List<IntervenantDto> IntervenantsDto;
+    private List<IntervenantDto> IntervenantDtos;
+    private List<Filiere_langueDto> filiere_langueDtos;
+    private List<CreneauDto> creneauDtos;
 }

@@ -1,8 +1,6 @@
 package com.services.impl;
 
-import com.dtos.IntervenantDto;
 import com.dtos.UtilisateurDto;
-import com.entities.Gestionnaire;
 import com.entities.Utilisateur;
 import com.repositories.UtilisateurRepository;
 import com.services.UtilisateurService;
@@ -23,13 +21,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public UtilisateurDto getUtilisateurById(UtilisateurDto utilisateurDto) {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurDto.getId()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
         return utilisateurEntityToDto(utilisateur);
     }
 
     @Override
     public boolean deleteUtilisateur(UtilisateurDto utilisateurDto) {
-        utilisateurRepository.deleteById(utilisateurDto.getId());
+        utilisateurRepository.deleteById(utilisateurDto.getUti_id());
         return true;
     }
 
@@ -45,7 +43,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public UtilisateurDto editUtilisateur(UtilisateurDto utilisateurDto){
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurDto.getId()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
         utilisateur.setLogin(utilisateurDto.getLogin());
         utilisateur.setMdp(utilisateurDto.getMdp());
         utilisateur.setNom(utilisateurDto.getNom());
@@ -57,7 +55,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     private UtilisateurDto utilisateurEntityToDto(Utilisateur utilisateur){
         UtilisateurDto utilisateurDto = new UtilisateurDto();
-        utilisateurDto.setId(utilisateur.getId());
+        utilisateurDto.setUti_id(utilisateur.getUti_id());
         utilisateurDto.setLogin(utilisateur.getLogin());
         utilisateurDto.setMdp(utilisateur.getMdp());
         utilisateurDto.setNom(utilisateur.getNom());

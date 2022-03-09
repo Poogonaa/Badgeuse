@@ -20,13 +20,13 @@ public class ComposanteServiceImpl implements ComposanteService {
 
     @Override
     public ComposanteDto getComposanteById(ComposanteDto composanteDto) {
-        Composante composante = composanteRepository.findById(composanteDto.getId()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        Composante composante = composanteRepository.findById(composanteDto.getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         return composanteEntityToDto(composante);
     }
 
     @Override
     public boolean deleteComposante(ComposanteDto composanteDto) {
-        composanteRepository.deleteById(composanteDto.getId());
+        composanteRepository.deleteById(composanteDto.getCom_id());
         return true;
     }
 
@@ -42,7 +42,7 @@ public class ComposanteServiceImpl implements ComposanteService {
 
     @Override
     public ComposanteDto editComposante(ComposanteDto composanteDto) {
-        Composante composante = composanteRepository.findById(composanteDto.getId()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        Composante composante = composanteRepository.findById(composanteDto.getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         composante.setNomComposante(composanteDto.getNomComposante());
         composante = composanteRepository.save(composante);
         return composanteEntityToDto(composante);
@@ -57,14 +57,14 @@ public class ComposanteServiceImpl implements ComposanteService {
 
     private Composante composanteDtoToEntity(ComposanteDto composanteDto){
         Composante composante = new Composante();
-        composante.setId(composanteDto.getId());
+        composante.setCom_id(composanteDto.getCom_id());
         composante.setNomComposante(composanteDto.getNomComposante());
         return composante;
     }
 
     private ComposanteDto composanteEntityToDto(Composante composante){
         ComposanteDto composanteDto = new ComposanteDto();
-        composanteDto.setId(composante.getId());
+        composanteDto.setCom_id(composante.getCom_id());
         composanteDto.setNomComposante(composante.getNomComposante());
         return composanteDto;
     }

@@ -24,7 +24,7 @@ public class GestionnaireServiceImpl extends UtilisateurServiceImpl implements G
 
     private Utilisateur gestionnaireDtoToEntity(UtilisateurDto utilisateurDto){
         Utilisateur utilisateur = new Gestionnaire();
-        utilisateur.setId(utilisateurDto.getId());
+        utilisateur.setUti_id(utilisateurDto.getUti_id());
         utilisateur.setLogin(utilisateurDto.getLogin());
         utilisateur.setMdp(utilisateurDto.getMdp());
         utilisateur.setNom(utilisateurDto.getNom());
@@ -35,7 +35,7 @@ public class GestionnaireServiceImpl extends UtilisateurServiceImpl implements G
 
     private UtilisateurDto gestionnaireEntityToDto(Utilisateur utilisateur){
         UtilisateurDto utilisateurDto = new GestionnaireDto();
-        utilisateurDto.setId(utilisateur.getId());
+        utilisateurDto.setUti_id(utilisateur.getUti_id());
         utilisateurDto.setLogin(utilisateur.getLogin());
         utilisateurDto.setMdp(utilisateur.getMdp());
         utilisateurDto.setNom(utilisateur.getNom());

@@ -24,7 +24,7 @@ public class IntervenantServiceImpl extends UtilisateurServiceImpl implements In
 
     private Utilisateur intervenantDtoToEntity(UtilisateurDto utilisateurDto){
         Utilisateur utilisateur = new Intervenant();
-        utilisateur.setId(utilisateurDto.getId());
+        utilisateur.setUti_id(utilisateurDto.getUti_id());
         utilisateur.setLogin(utilisateurDto.getLogin());
         utilisateur.setMdp(utilisateurDto.getMdp());
         utilisateur.setNom(utilisateurDto.getNom());
@@ -35,7 +35,7 @@ public class IntervenantServiceImpl extends UtilisateurServiceImpl implements In
 
     private UtilisateurDto intervenantEntityToDto(Utilisateur utilisateur){
         UtilisateurDto utilisateurDto = new IntervenantDto();
-        utilisateurDto.setId(utilisateur.getId());
+        utilisateurDto.setUti_id(utilisateur.getUti_id());
         utilisateurDto.setLogin(utilisateur.getLogin());
         utilisateurDto.setMdp(utilisateur.getMdp());
         utilisateurDto.setNom(utilisateur.getNom());

@@ -28,13 +28,13 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
 
     @Override
     public Filiere_langueDto getFiliere_langueById(Filiere_langueDto filiere_langueDto) {
-        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getId()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
         return filiere_langueEntityToDto(filiere_langue);
     }
 
     @Override
     public boolean deleteFiliere_langue(Filiere_langueDto filiere_langueDto) {
-        filiere_langueRepository.deleteById(filiere_langueDto.getId());
+        filiere_langueRepository.deleteById(filiere_langueDto.getFil_id());
         return true;
     }
 
@@ -50,7 +50,7 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
 
     @Override
     public Filiere_langueDto editFiliere_langue(Filiere_langueDto filiere_langueDto) {
-        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getId()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
         filiere_langue.setCode(filiere_langueDto.getCode());
         filiere_langue.setNom(filiere_langueDto.getNom());
         filiere_langue = filiere_langueRepository.save(filiere_langue);
@@ -59,7 +59,7 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
 
     private Filiere_langue filiere_langueDtoToEntity(Filiere_langueDto filiere_langueDto){
         Filiere_langue filiere_langue = new Filiere_langue();
-        filiere_langue.setId(filiere_langueDto.getId());
+        filiere_langue.setFil_id(filiere_langueDto.getFil_id());
         filiere_langue.setCode(filiere_langueDto.getCode());
         filiere_langue.setNom(filiere_langueDto.getNom());
         return filiere_langue;
@@ -67,7 +67,7 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
 
     private Filiere_langueDto filiere_langueEntityToDto(Filiere_langue filiere_langue){
         Filiere_langueDto filiere_langueDto = new Filiere_langueDto();
-        filiere_langueDto.setId(filiere_langue.getId());
+        filiere_langueDto.setFil_id(filiere_langue.getFil_id());
         filiere_langueDto.setCode(filiere_langue.getCode());
         filiere_langueDto.setNom(filiere_langue.getNom());
         return filiere_langueDto;

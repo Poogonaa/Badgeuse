@@ -10,9 +10,8 @@ import javax.persistence.Id;
 @Entity
 @Data
 public class Utilisateur {
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long uti_id;
     private String login;
     private String mdp;
     private String nom;

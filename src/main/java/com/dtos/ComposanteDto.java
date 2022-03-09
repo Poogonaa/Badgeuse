@@ -6,7 +6,8 @@ import java.util.List;
 
 @Data
 public class ComposanteDto {
-    private Long id;
+    private Long com_id;
     private String nomComposante;
-    private List<Filiere_langueDto> filieres_languesDto;
+    private List<Filiere_langueDto> filiere_langueDtos;
+    private List<ResponsableDto> responsableDtos;
 }

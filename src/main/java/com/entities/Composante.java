@@ -10,8 +10,10 @@ import java.util.List;
 public class Composante {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long com_id;
     private String nomComposante;
-    @OneToMany
-    private List<Filiere_langue> filieres_langues;
+    @OneToMany (targetEntity = Filiere_langue.class, mappedBy = "composante" )
+    private List<Filiere_langue> filiere_langues;
+    @OneToMany (targetEntity = Responsable.class, mappedBy = "composante" )
+    private List<Responsable> responsables;
 }

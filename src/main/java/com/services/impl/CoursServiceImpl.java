@@ -28,13 +28,13 @@ public class CoursServiceImpl implements CoursService {
 
     @Override
     public CoursDto getCoursById(CoursDto coursDto) {
-        Cours cours = coursRepository.findById(coursDto.getId()).orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
         return coursEntityToDto(cours);
     }
 
     @Override
     public boolean deleteCours(CoursDto coursDto) {
-        coursRepository.deleteById(coursDto.getId());
+        coursRepository.deleteById(coursDto.getCou_id());
         return true;
     }
 
@@ -50,7 +50,7 @@ public class CoursServiceImpl implements CoursService {
 
     @Override
     public CoursDto editCours(CoursDto coursDto){
-        Cours cours = coursRepository.findById(coursDto.getId()).orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
         cours.setIntitule(coursDto.getIntitule());
         cours = coursRepository.save(cours);
         return coursEntityToDto(cours);
@@ -58,14 +58,14 @@ public class CoursServiceImpl implements CoursService {
 
     private Cours coursDtoToEntity(CoursDto coursDto){
         Cours cours = new Cours();
-        cours.setId(coursDto.getId());
+        cours.setCou_id(coursDto.getCou_id());
         cours.setIntitule(coursDto.getIntitule());
         return cours;
     }
 
     private CoursDto coursEntityToDto(Cours cours){
         CoursDto coursDto = new CoursDto();
-        coursDto.setId(cours.getId());
+        coursDto.setCou_id(cours.getCou_id());
         coursDto.setIntitule(cours.getIntitule());
         return coursDto;
     }

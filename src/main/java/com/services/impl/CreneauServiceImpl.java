@@ -1,10 +1,7 @@
 package com.services.impl;
 
-import com.dtos.ComposanteDto;
 import com.dtos.CreneauDto;
-import com.entities.Composante;
 import com.entities.Creneau;
-import com.repositories.ComposanteRepository;
 import com.repositories.CreaneauRepository;
 import com.services.CreneauService;
 import org.springframework.stereotype.Service;
@@ -30,13 +27,13 @@ public class CreneauServiceImpl implements CreneauService {
 
     @Override
     public CreneauDto getCreneauById(CreneauDto creneauDto) {
-        Creneau creneau = creaneauRepository.findById(creneauDto.getId()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        Creneau creneau = creaneauRepository.findById(creneauDto.getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         return creneauEntityToDto(creneau);
     }
 
     @Override
     public boolean deleteCreneau(CreneauDto creneauDto) {
-        creaneauRepository.deleteById(creneauDto.getId());
+        creaneauRepository.deleteById(creneauDto.getCre_id());
         return true;
     }
 
@@ -52,7 +49,7 @@ public class CreneauServiceImpl implements CreneauService {
 
     @Override
     public CreneauDto editCreneau(CreneauDto creneauDto) {
-        Creneau creneau = creaneauRepository.findById(creneauDto.getId()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        Creneau creneau = creaneauRepository.findById(creneauDto.getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         creneau.setDate_heure(creneauDto.getDate_heure());
         creneau.setDuree(creneauDto.getDuree());
         creneau.setType(creneauDto.getType());
@@ -62,7 +59,7 @@ public class CreneauServiceImpl implements CreneauService {
 
     private Creneau creneauDtoToEntity(CreneauDto creneauDto){
         Creneau creneau = new Creneau();
-        creneau.setId(creneauDto.getId());
+        creneau.setCre_id(creneauDto.getCre_id());
         creneau.setDate_heure(creneauDto.getDate_heure());
         creneau.setDuree(creneauDto.getDuree());
         creneau.setType(creneauDto.getType());
@@ -72,7 +69,7 @@ public class CreneauServiceImpl implements CreneauService {
 
     private CreneauDto creneauEntityToDto(Creneau creneau){
         CreneauDto creneauDto = new CreneauDto();
-        creneauDto.setId(creneau.getId());
+        creneauDto.setCre_id(creneau.getCre_id());
         creneauDto.setDate_heure(creneau.getDate_heure());
         creneauDto.setDuree(creneau.getDuree());
         creneauDto.setType(creneau.getType());
