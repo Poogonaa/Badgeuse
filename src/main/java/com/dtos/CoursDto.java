@@ -9,6 +9,6 @@ public class CoursDto {
 
     private Long id;
     private String intitule;
-    private List<CreneauDto> mesCreneauDto;
-    private List<IntervenantDto> mesVacatairesDto;
+    private List<CreneauDto> CreneauxDto;
+    private List<IntervenantDto> IntervenantsDto;
 }

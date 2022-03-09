@@ -13,7 +13,7 @@ public class Cours {
     private Long id;
     private String intitule;
     @OneToMany
-    private List<Creneau> mesCreneau;
+    private List<Creneau> Creneaux;
     @ManyToMany
-    private List<Intervenant> Intvenants;
+    private List<Intervenant> Intervenants;
 }
