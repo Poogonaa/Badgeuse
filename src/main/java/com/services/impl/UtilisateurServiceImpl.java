@@ -20,14 +20,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public UtilisateurDto getUtilisateurById(UtilisateurDto utilisateurDto) {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
+    public UtilisateurDto getUtilisateurById(Long id) {
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
         return utilisateurEntityToDto(utilisateur);
     }
 
     @Override
-    public boolean deleteUtilisateur(UtilisateurDto utilisateurDto) {
-        utilisateurRepository.deleteById(utilisateurDto.getUti_id());
+    public boolean deleteUtilisateur(Long id) {
+        utilisateurRepository.deleteById(id);
         return true;
     }
 

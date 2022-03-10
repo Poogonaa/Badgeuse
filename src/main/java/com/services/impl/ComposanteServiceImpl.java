@@ -19,14 +19,14 @@ public class ComposanteServiceImpl implements ComposanteService {
     }
 
     @Override
-    public ComposanteDto getComposanteById(ComposanteDto composanteDto) {
-        Composante composante = composanteRepository.findById(composanteDto.getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+    public ComposanteDto getComposanteById(Long id) {
+        Composante composante = composanteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         return composanteEntityToDto(composante);
     }
 
     @Override
-    public boolean deleteComposante(ComposanteDto composanteDto) {
-        composanteRepository.deleteById(composanteDto.getCom_id());
+    public boolean deleteComposante(Long id) {
+        composanteRepository.deleteById(id);
         return true;
     }
 

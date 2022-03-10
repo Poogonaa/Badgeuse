@@ -23,9 +23,9 @@ public class CoursController {
         return coursService.getAllCours();
     }
 
-    @GetMapping("/mono")
-    public CoursDto getCours(final @RequestBody CoursDto coursDto){
-        return coursService.getCoursById(coursDto);
+    @GetMapping("/{id}")
+    public CoursDto getCours(@PathVariable Long id){
+        return coursService.getCoursById(id);
     }
 
     @PostMapping
@@ -33,9 +33,9 @@ public class CoursController {
         return coursService.addCours(coursDto);
     }
 
-    @DeleteMapping
-    public Boolean deleteCours(final @RequestBody CoursDto coursDto){
-        return coursService.deleteCours(coursDto);
+    @DeleteMapping("/{id}")
+    public Boolean deleteCours(@PathVariable Long id){
+        return coursService.deleteCours(id);
     }
 
     @PutMapping

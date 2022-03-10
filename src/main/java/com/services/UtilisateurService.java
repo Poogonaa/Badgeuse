@@ -5,9 +5,9 @@ import com.dtos.UtilisateurDto;
 import java.util.List;
 
 public interface UtilisateurService {
-    UtilisateurDto getUtilisateurById(UtilisateurDto utilisateurDto);
+    UtilisateurDto getUtilisateurById(Long id);
 
-    boolean deleteUtilisateur(UtilisateurDto utilisateurDto);
+    boolean deleteUtilisateur(Long id);
 
     List<UtilisateurDto> getAllUtilisateurs();
 

@@ -21,9 +21,9 @@ public class UtilisateurController {
         return utilisateurService.getAllUtilisateurs();
     }
 
-    @GetMapping("/mono")
-    public UtilisateurDto getUtilisateur(final @RequestBody UtilisateurDto utilisateurDto){
-        return utilisateurService.getUtilisateurById(utilisateurDto);
+    @GetMapping("/{id}")
+    public UtilisateurDto getUtilisateur(@PathVariable Long id){
+        return utilisateurService.getUtilisateurById(id);
     }
 
     @PutMapping
@@ -31,8 +31,8 @@ public class UtilisateurController {
         return utilisateurService.editUtilisateur(utilisateurDto);
     }
 
-    @DeleteMapping
-    public Boolean deleteUtilisateur(final @RequestBody UtilisateurDto utilisateurDto){
-        return utilisateurService.deleteUtilisateur(utilisateurDto);
+    @DeleteMapping("/{id}")
+    public Boolean deleteUtilisateur(@PathVariable Long id){
+        return utilisateurService.deleteUtilisateur(id);
     }
 }

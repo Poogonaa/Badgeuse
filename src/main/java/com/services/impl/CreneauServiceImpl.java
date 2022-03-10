@@ -26,14 +26,14 @@ public class CreneauServiceImpl implements CreneauService {
     }
 
     @Override
-    public CreneauDto getCreneauById(CreneauDto creneauDto) {
-        Creneau creneau = creaneauRepository.findById(creneauDto.getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+    public CreneauDto getCreneauById(Long id) {
+        Creneau creneau = creaneauRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         return creneauEntityToDto(creneau);
     }
 
     @Override
-    public boolean deleteCreneau(CreneauDto creneauDto) {
-        creaneauRepository.deleteById(creneauDto.getCre_id());
+    public boolean deleteCreneau(Long id) {
+        creaneauRepository.deleteById(id);
         return true;
     }
 

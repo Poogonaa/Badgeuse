@@ -8,9 +8,9 @@ import java.util.List;
 public interface CoursService {
     CoursDto addCours(CoursDto coursDto);
 
-    CoursDto getCoursById(CoursDto coursDto);
+    CoursDto getCoursById(Long id);
 
-    boolean deleteCours(CoursDto coursDto);
+    boolean deleteCours(Long id);
 
     List<CoursDto> getAllCours();
 
