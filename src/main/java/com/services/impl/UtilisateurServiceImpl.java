@@ -54,6 +54,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return utilisateurEntityToDto(utilisateur);
     }
 
+    public UtilisateurDto connection(UtilisateurDto utilisateurDto){
+        List<UtilisateurDto> utilisateurDtos = new ArrayList<>();
+        List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
+        utilisateurs.forEach(utilisateur -> {
+            utilisateurDtos.add(utilisateurEntityToDto(utilisateur));
+        });
+        for (UtilisateurDto uti : utilisateurDtos){
+            if(uti.getLogin().equals(utilisateurDto.getLogin())){
+                if(uti.getMdp().equals(utilisateurDto.getMdp())){
+                    return uti;
+                }
+                return null;
+            }
+        }
+        return null;
+    }
+
     private UtilisateurDto utilisateurEntityToDto(Utilisateur utilisateur){
         UtilisateurDto utilisateurDto = new UtilisateurDto();
         utilisateurDto.setUti_id(utilisateur.getUti_id());

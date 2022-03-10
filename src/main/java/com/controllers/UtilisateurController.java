@@ -35,4 +35,9 @@ public class UtilisateurController {
     public Boolean deleteUtilisateur(@PathVariable Long id){
         return utilisateurService.deleteUtilisateur(id);
     }
+
+    @PostMapping("/signin")
+    public UtilisateurDto connection(final @RequestBody UtilisateurDto utilisateurDto){
+        return utilisateurService.connection(utilisateurDto);
+    }
 }
