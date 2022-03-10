@@ -49,6 +49,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         utilisateur.setNom(utilisateurDto.getNom());
         utilisateur.setPrenom(utilisateurDto.getPrenom());
         utilisateur.setMail(utilisateurDto.getMail());
+        utilisateur.setDtype(utilisateurDto.getDtype());
         utilisateur = utilisateurRepository.save(utilisateur);
         return utilisateurEntityToDto(utilisateur);
     }
@@ -61,6 +62,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         utilisateurDto.setNom(utilisateur.getNom());
         utilisateurDto.setPrenom(utilisateur.getPrenom());
         utilisateurDto.setMail(utilisateur.getMail());
+        utilisateurDto.setDtype(utilisateur.getDtype());
         return utilisateurDto;
     }
 }
