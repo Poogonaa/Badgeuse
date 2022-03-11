@@ -27,14 +27,14 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
     }
 
     @Override
-    public Filiere_langueDto getFiliere_langueById(Filiere_langueDto filiere_langueDto) {
-        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
+    public Filiere_langueDto getFiliere_langueById(Long id) {
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
         return filiere_langueEntityToDto(filiere_langue);
     }
 
     @Override
-    public boolean deleteFiliere_langue(Filiere_langueDto filiere_langueDto) {
-        filiere_langueRepository.deleteById(filiere_langueDto.getFil_id());
+    public boolean deleteFiliere_langue(Long id) {
+        filiere_langueRepository.deleteById(id);
         return true;
     }
 

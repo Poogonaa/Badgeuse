@@ -11,4 +11,5 @@ public class UtilisateurDto {
     private String nom;
     private String prenom;
     private String mail;
+    private String dtype;
 }

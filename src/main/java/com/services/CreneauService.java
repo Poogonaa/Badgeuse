@@ -7,9 +7,9 @@ import java.util.List;
 public interface CreneauService {
     CreneauDto addCreneau(CreneauDto creneauDto);
 
-    CreneauDto getCreneauById(CreneauDto creneauDto);
+    CreneauDto getCreneauById(Long id);
 
-    boolean deleteCreneau(CreneauDto creneauDto);
+    boolean deleteCreneau(Long id);
 
     List<CreneauDto> getAllCreneaux();
 

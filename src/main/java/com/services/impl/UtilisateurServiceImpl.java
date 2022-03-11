@@ -20,14 +20,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public UtilisateurDto getUtilisateurById(UtilisateurDto utilisateurDto) {
-        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
+    public UtilisateurDto getUtilisateurById(Long id) {
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Utilisateur not found"));
         return utilisateurEntityToDto(utilisateur);
     }
 
     @Override
-    public boolean deleteUtilisateur(UtilisateurDto utilisateurDto) {
-        utilisateurRepository.deleteById(utilisateurDto.getUti_id());
+    public boolean deleteUtilisateur(Long id) {
+        utilisateurRepository.deleteById(id);
         return true;
     }
 
@@ -49,8 +49,26 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         utilisateur.setNom(utilisateurDto.getNom());
         utilisateur.setPrenom(utilisateurDto.getPrenom());
         utilisateur.setMail(utilisateurDto.getMail());
+        utilisateur.setDtype(utilisateurDto.getDtype());
         utilisateur = utilisateurRepository.save(utilisateur);
         return utilisateurEntityToDto(utilisateur);
+    }
+
+    public UtilisateurDto connection(UtilisateurDto utilisateurDto){
+        List<UtilisateurDto> utilisateurDtos = new ArrayList<>();
+        List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
+        utilisateurs.forEach(utilisateur -> {
+            utilisateurDtos.add(utilisateurEntityToDto(utilisateur));
+        });
+        for (UtilisateurDto uti : utilisateurDtos){
+            if(uti.getLogin().equals(utilisateurDto.getLogin())){
+                if(uti.getMdp().equals(utilisateurDto.getMdp())){
+                    return uti;
+                }
+                return null;
+            }
+        }
+        return null;
     }
 
     private UtilisateurDto utilisateurEntityToDto(Utilisateur utilisateur){
@@ -61,6 +79,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         utilisateurDto.setNom(utilisateur.getNom());
         utilisateurDto.setPrenom(utilisateur.getPrenom());
         utilisateurDto.setMail(utilisateur.getMail());
+        utilisateurDto.setDtype(utilisateur.getDtype());
         return utilisateurDto;
     }
 }

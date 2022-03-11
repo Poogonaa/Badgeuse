@@ -20,14 +20,14 @@ public class SeanceFormationController {
         return seanceFormationService.getAllSeancesFormations();
     }
 
-    @GetMapping("/mono")
-    public SeanceFormationDto getSeanceFormation(final @RequestBody SeanceFormationDto seanceFormationDto){
-        return seanceFormationService.getSeanceFormationById(seanceFormationDto);
+    @GetMapping("/{id}")
+    public SeanceFormationDto getSeanceFormation(@PathVariable Long id){
+        return seanceFormationService.getSeanceFormationById(id);
     }
 
-    @PutMapping
-    public Boolean deleteSeanceFormation(final @RequestBody SeanceFormationDto seanceFormationDto){
-        return seanceFormationService.deleteSeanceFormation(seanceFormationDto);
+    @DeleteMapping("/{id}")
+    public Boolean deleteSeanceFormation(@PathVariable Long id){
+        return seanceFormationService.deleteSeanceFormation(id);
     }
 
     @PostMapping

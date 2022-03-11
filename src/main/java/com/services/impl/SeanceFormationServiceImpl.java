@@ -18,14 +18,14 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     }
 
     @Override
-    public SeanceFormationDto getSeanceFormationById(SeanceFormationDto seanceFormationDto) {
-        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(()-> new EntityNotFoundException("Seance not found"));
+    public SeanceFormationDto getSeanceFormationById(Long id) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Seance not found"));
         return seanceFormationEntityToDto(seanceFormation);
     }
 
     @Override
-    public boolean deleteSeanceFormation(SeanceFormationDto seanceFormationDto) {
-        seanceFormationRepository.deleteById(seanceFormationDto.getSea_id());
+    public boolean deleteSeanceFormation(Long id) {
+        seanceFormationRepository.deleteById(id);
         return true;
     }
 

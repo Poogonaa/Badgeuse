@@ -21,9 +21,9 @@ public class CreneauController {
         return creneauService.getAllCreneaux();
     }
 
-    @GetMapping("/mono")
-    public CreneauDto getCreneau(final @RequestBody CreneauDto creneauDto){
-        return creneauService.getCreneauById(creneauDto);
+    @GetMapping("/{id}")
+    public CreneauDto getCreneau(@PathVariable Long id){
+        return creneauService.getCreneauById(id);
     }
 
     @PutMapping
@@ -31,9 +31,9 @@ public class CreneauController {
         return creneauService.editCreneau(creneauDto);
     }
 
-    @DeleteMapping
-    public Boolean deleteCreneau(final @RequestBody CreneauDto creneauDto){
-        return creneauService.deleteCreneau(creneauDto);
+    @DeleteMapping("/{id}")
+    public Boolean deleteCreneau(@PathVariable Long id){
+        return creneauService.deleteCreneau(id);
     }
 
     @PostMapping

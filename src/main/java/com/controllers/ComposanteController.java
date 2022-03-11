@@ -21,9 +21,9 @@ public class ComposanteController {
         return composanteService.getAllComposantes();
     }
 
-    @GetMapping("/mono")
-    public ComposanteDto getComposante(final @RequestBody ComposanteDto composanteDto){
-        return composanteService.getComposanteById(composanteDto);
+    @GetMapping("/{id}")
+    public ComposanteDto getComposante(@PathVariable Long id){
+        return composanteService.getComposanteById(id);
     }
 
     @PutMapping
@@ -31,9 +31,9 @@ public class ComposanteController {
         return composanteService.editComposante(composanteDto);
     }
 
-    @DeleteMapping
-    public Boolean deleteComposante(final @RequestBody ComposanteDto composanteDto){
-        return composanteService.deleteComposante(composanteDto);
+    @DeleteMapping("/{id}")
+    public Boolean deleteComposante(@PathVariable Long id){
+        return composanteService.deleteComposante(id);
     }
 
     @PostMapping

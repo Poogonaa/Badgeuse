@@ -5,9 +5,9 @@ import com.dtos.SeanceFormationDto;
 import java.util.List;
 
 public interface SeanceFormationService {
-    SeanceFormationDto getSeanceFormationById(SeanceFormationDto seanceFromationDto);
+    SeanceFormationDto getSeanceFormationById(Long id);
 
-    boolean deleteSeanceFormation(SeanceFormationDto seanceFromationDto);
+    boolean deleteSeanceFormation(Long id);
 
     List<SeanceFormationDto> getAllSeancesFormations();
 

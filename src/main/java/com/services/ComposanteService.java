@@ -6,9 +6,9 @@ import com.entities.Composante;
 import java.util.List;
 
 public interface ComposanteService {
-    ComposanteDto getComposanteById(ComposanteDto composanteDto);
+    ComposanteDto getComposanteById(Long id);
 
-    boolean deleteComposante(ComposanteDto composanteDto);
+    boolean deleteComposante(Long id);
 
     List<ComposanteDto> getAllComposantes();
 
