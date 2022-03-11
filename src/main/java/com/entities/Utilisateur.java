@@ -11,6 +11,7 @@ public class Utilisateur {
     private Long uti_id;
     @Column(unique = true)
     private String login;
+    @Column(length = 256)
     private String mdp;
     private String nom;
     private String prenom;
