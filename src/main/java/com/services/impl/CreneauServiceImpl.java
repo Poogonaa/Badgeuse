@@ -2,7 +2,7 @@ package com.services.impl;
 
 import com.dtos.CreneauDto;
 import com.entities.Creneau;
-import com.repositories.CreaneauRepository;
+import com.repositories.CreneauRepository;
 import com.services.CreneauService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,9 @@ import java.util.List;
 
 @Service("creneauService")
 public class CreneauServiceImpl implements CreneauService {
-    protected final CreaneauRepository creaneauRepository;
+    protected final CreneauRepository creaneauRepository;
 
-    public CreneauServiceImpl(CreaneauRepository creaneauRepository) {
+    public CreneauServiceImpl(CreneauRepository creaneauRepository) {
         this.creaneauRepository = creaneauRepository;
     }
 

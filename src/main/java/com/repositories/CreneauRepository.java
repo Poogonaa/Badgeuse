@@ -3,5 +3,5 @@ package com.repositories;
 import com.entities.Creneau;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CreaneauRepository extends JpaRepository<Creneau, Long> {
+public interface CreneauRepository extends JpaRepository<Creneau, Long> {
 }

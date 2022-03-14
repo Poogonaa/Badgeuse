@@ -1,10 +1,7 @@
 package com.dataseed;
 
 import com.entities.*;
-import com.repositories.ComposanteRepository;
-import com.repositories.CoursRepository;
-import com.repositories.Filiere_langueRepository;
-import com.repositories.UtilisateurRepository;
+import com.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,6 +10,8 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
+    IntervenantRepository interRepository;
+    @Autowired
     UtilisateurRepository userRepository;
     @Autowired
     CoursRepository coursRepository;
@@ -20,6 +19,10 @@ public class DataLoader implements CommandLineRunner {
     ComposanteRepository compRepository;
     @Autowired
     Filiere_langueRepository flRepository;
+    @Autowired
+    CreneauRepository creneauRepository;
+    @Autowired
+    SeanceFormationRepository seanceRepository;
 
     //lancé à chaque lancement du serveur
     @Override
@@ -29,6 +32,10 @@ public class DataLoader implements CommandLineRunner {
         loadFiliereLangueData();
         loadJoinCoursFiliereData();
         loadUtilisateurData();
+
+        loadCreneauData();
+        loadSeanceData();
+
     }
 
 
@@ -121,6 +128,48 @@ public class DataLoader implements CommandLineRunner {
             inter.setMail("yvain.pedestres@kaamelot.bzh");
             inter.setMdp("141ab274590fd72af5abbee9b64eabb4daae135844eaedc2634625d25c52bfa5");
             userRepository.save(inter);
+        }
+    }
+
+    private void loadCreneauData(){
+        if (creneauRepository.count() == 0) {
+            Creneau anglais_matin = new Creneau();
+            anglais_matin.setCours(coursRepository.getById(new Long(1)));
+            anglais_matin.setDate_heure("14-03-2022 8h");
+            anglais_matin.setSalle("micro 2.4");
+            anglais_matin.setDuree(120);
+            anglais_matin.setType("TP");
+            creneauRepository.save(anglais_matin);
+
+            Creneau anglais_soir = new Creneau();
+            anglais_soir.setCours(coursRepository.getById(new Long(1)));
+            anglais_soir.setDate_heure("14-03-2022 15h30");
+            anglais_soir.setSalle("micro 2.4");
+            anglais_soir.setDuree(120);
+            anglais_soir.setType("TD");
+            creneauRepository.save(anglais_soir);
+        }
+    }
+
+    private void loadSeanceData(){
+        if (seanceRepository.count() == 0) {
+            SeanceFormation seanceEffectue = new SeanceFormation();
+            seanceEffectue.setCreneau(creneauRepository.getById(new Long(1)));
+            seanceEffectue.setDureeEffective(115);
+            Intervenant intervenantAnglais = interRepository.getById(new Long(3));
+            seanceEffectue.setIntervenant(intervenantAnglais);
+            seanceEffectue.setCommentaire("Le projecteur ne semble pas fonctionné.");
+            seanceEffectue.setEstEffectue(true);
+
+            seanceRepository.save(seanceEffectue);
+
+            SeanceFormation seanceNonEffectue = new SeanceFormation();
+            seanceNonEffectue.setCreneau(creneauRepository.getById(new Long(2)));
+            seanceNonEffectue.setDureeEffective(0);
+            seanceNonEffectue.setIntervenant(interRepository.getById(new Long(1)));
+            seanceNonEffectue.setEstEffectue(false);
+
+            seanceRepository.save(seanceNonEffectue);
         }
     }
 
