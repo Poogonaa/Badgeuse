@@ -5,11 +5,9 @@ import com.entities.Utilisateur;
 import com.repositories.UtilisateurRepository;
 import com.services.UtilisateurService;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service("utilisateurService")
 public class UtilisateurServiceImpl implements UtilisateurService {
@@ -36,9 +34,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public List<UtilisateurDto> getAllUtilisateurs() {
         List<UtilisateurDto> utilisateurDtos = new ArrayList<>();
         List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
-        utilisateurs.forEach(utilisateur -> {
+        for (Utilisateur utilisateur : utilisateurs) {
             utilisateurDtos.add(utilisateurEntityToDto(utilisateur));
-        });
+        }
         return utilisateurDtos;
     }
 
@@ -58,9 +56,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public UtilisateurDto connection(UtilisateurDto utilisateurDto){
         List<UtilisateurDto> utilisateurDtos = new ArrayList<>();
         List<Utilisateur> utilisateurs = utilisateurRepository.findAll();
-        utilisateurs.forEach(utilisateur -> {
+        for (Utilisateur utilisateur : utilisateurs) {
             utilisateurDtos.add(utilisateurEntityToDto(utilisateur));
-        });
+        }
         for (UtilisateurDto uti : utilisateurDtos){
             if(uti.getLogin().equals(utilisateurDto.getLogin())){
                 if(uti.getMdp().equals(utilisateurDto.getMdp())){

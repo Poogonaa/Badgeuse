@@ -1,15 +1,14 @@
 package com.controllers;
 
-import com.dtos.ResponsableDto;
+import com.dtos.Filiere_langueDto;
 import com.dtos.SeanceFormationDto;
-import com.dtos.UtilisateurDto;
 import com.services.impl.SeanceFormationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("seancesformations")
 public class SeanceFormationController {
 
     private final SeanceFormationServiceImpl seanceFormationService;
@@ -25,6 +24,21 @@ public class SeanceFormationController {
     @GetMapping("/{id}")
     public SeanceFormationDto getSeanceFormation(@PathVariable Long id){
         return seanceFormationService.getSeanceFormationById(id);
+    }
+
+    @PutMapping
+    public SeanceFormationDto editSeanceFormation(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.editSeanceFormation(seanceFormationDto);
+    }
+
+    @GetMapping("/intervenant/{id}")
+    public List<SeanceFormationDto> getSeanceFormationsByIntervenant(@PathVariable Long id){
+        return seanceFormationService.getAllSeancesFormationsByIntervenant(id);
+    }
+
+    @GetMapping("/effectue/intervenant/{id}")
+    public List<SeanceFormationDto> getSeanceFormationEffectueesByIntervenant(@PathVariable Long id){
+        return seanceFormationService.getAllSeancesFormationsEffectueesByIntervenant(id);
     }
 
     @DeleteMapping("/{id}")
@@ -55,5 +69,10 @@ public class SeanceFormationController {
     @PutMapping("/removeCreneau")
     public SeanceFormationDto removeCreneau(final @RequestBody SeanceFormationDto seanceFormationDto){
         return seanceFormationService.removeCreneau(seanceFormationDto);
+    }
+
+    @PutMapping("/valider")
+    public SeanceFormationDto valider(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.valider(seanceFormationDto);
     }
 }

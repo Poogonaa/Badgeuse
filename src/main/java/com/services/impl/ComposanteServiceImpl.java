@@ -1,8 +1,6 @@
 package com.services.impl;
 
 import com.dtos.ComposanteDto;
-import com.dtos.Filiere_langueDto;
-import com.dtos.ResponsableDto;
 import com.entities.Composante;
 import com.entities.Filiere_langue;
 import com.entities.Responsable;
@@ -10,9 +8,7 @@ import com.repositories.ComposanteRepository;
 import com.repositories.Filiere_langueRepository;
 import com.repositories.UtilisateurRepository;
 import com.services.ComposanteService;
-import com.services.UtilisateurService;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +41,9 @@ public class ComposanteServiceImpl implements ComposanteService {
     public List<ComposanteDto> getAllComposantes() {
         List<ComposanteDto> composanteDtos = new ArrayList<>();
         List<Composante> composantes = composanteRepository.findAll();
-        composantes.forEach(composante -> {
+        for (Composante composante : composantes) {
             composanteDtos.add(composanteEntityToDto(composante));
-        });
+        }
         return composanteDtos;
     }
 

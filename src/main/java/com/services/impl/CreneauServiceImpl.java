@@ -1,12 +1,11 @@
 package com.services.impl;
 
-import com.dtos.CoursDto;
 import com.dtos.CreneauDto;
-import com.dtos.SeanceFormationDto;
 import com.entities.*;
 import com.repositories.CoursRepository;
 import com.repositories.CreneauRepository;
 import com.repositories.SeanceFormationRepository;
+import com.entities.Creneau;
 import com.services.CreneauService;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,7 @@ import java.util.List;
 
 @Service("creneauService")
 public class CreneauServiceImpl implements CreneauService {
+
     protected final CreneauRepository creneauRepository;
     protected final CoursRepository coursRepository;
     protected final SeanceFormationRepository seanceFormationRepository;
@@ -49,9 +49,9 @@ public class CreneauServiceImpl implements CreneauService {
     public List<CreneauDto> getAllCreneaux() {
         List<CreneauDto> creneauDtos = new ArrayList<>();
         List<Creneau> creneaux = creneauRepository.findAll();
-        creneaux.forEach(creneau -> {
+        for (Creneau creneau : creneaux) {
             creneauDtos.add(creneauEntityToDto(creneau));
-        });
+        }
         return creneauDtos;
     }
 

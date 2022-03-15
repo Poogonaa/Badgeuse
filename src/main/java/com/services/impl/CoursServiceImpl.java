@@ -51,9 +51,9 @@ public class CoursServiceImpl implements CoursService {
     public List<CoursDto> getAllCours() {
         List<CoursDto> coursDtos = new ArrayList<>();
         List<Cours> cours = coursRepository.findAll();
-        cours.forEach(unCours -> {
+        for (Cours unCours : cours) {
             coursDtos.add(coursEntityToDto(unCours));
-        });
+        }
         return coursDtos;
     }
 

@@ -1,6 +1,5 @@
 package com.controllers;
 
-import com.dtos.IntervenantDto;
 import com.dtos.ResponsableDto;
 import com.dtos.UtilisateurDto;
 import com.services.impl.ResponsableServiceImpl;

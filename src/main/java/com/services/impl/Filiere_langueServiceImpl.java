@@ -1,7 +1,5 @@
 package com.services.impl;
 
-import com.dtos.ComposanteDto;
-import com.dtos.CoursDto;
 import com.dtos.Filiere_langueDto;
 import com.entities.Composante;
 import com.entities.Cours;
@@ -52,9 +50,9 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
     public List<Filiere_langueDto> getAllFiliere_langues() {
         List<Filiere_langueDto> filiere_langueDtos = new ArrayList<>();
         List<Filiere_langue> filiere_langues = filiere_langueRepository.findAll();
-        filiere_langues.forEach(filiere_langue -> {
+        for (Filiere_langue filiere_langue : filiere_langues) {
             filiere_langueDtos.add(filiere_langueEntityToDto(filiere_langue));
-        });
+        }
         return filiere_langueDtos;
     }
 

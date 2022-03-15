@@ -1,8 +1,6 @@
 package com.controllers;
 
-import com.dtos.ComposanteDto;
 import com.dtos.CoursDto;
-import com.dtos.IntervenantDto;
 import org.springframework.web.bind.annotation.*;
 
 import com.services.impl.CoursServiceImpl;
