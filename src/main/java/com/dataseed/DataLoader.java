@@ -68,9 +68,9 @@ public class DataLoader implements CommandLineRunner {
      */
     private void loadComposanteData(){
         if(compRepository.count() == 0){
-            Composante comp1 = new Composante();
-            comp1.setNomComposante("Une Composante");
-            compRepository.save(comp1);
+            Composante ufr_science = new Composante();
+            ufr_science.setNomComposante("UFR Sciences");
+            compRepository.save(ufr_science);
         }
     }
 

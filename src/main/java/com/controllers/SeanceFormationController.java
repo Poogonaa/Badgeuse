@@ -1,7 +1,9 @@
 package com.controllers;
 
 import com.dtos.SeanceFormationDto;
+import com.repositories.IntervenantRepository;
 import com.services.impl.SeanceFormationServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +32,10 @@ public class SeanceFormationController {
         return seanceFormationService.getAllSeancesFormationsByIntervenant(id);
     }
 
-
+    @GetMapping("/effectue/intervenant/{id}")
+    public List<SeanceFormationDto> getSeanceFormationEffectueesByIntervenant(@PathVariable Long id){
+        return seanceFormationService.getAllSeancesFormationsEffectueesByIntervenant(id);
+    }
 
     @DeleteMapping("/{id}")
     public Boolean deleteSeanceFormation(@PathVariable Long id){
