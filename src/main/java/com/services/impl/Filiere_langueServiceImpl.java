@@ -1,7 +1,13 @@
 package com.services.impl;
 
+import com.dtos.ComposanteDto;
+import com.dtos.CoursDto;
 import com.dtos.Filiere_langueDto;
+import com.entities.Composante;
+import com.entities.Cours;
 import com.entities.Filiere_langue;
+import com.repositories.ComposanteRepository;
+import com.repositories.CoursRepository;
 import com.repositories.Filiere_langueRepository;
 import com.services.Filiere_langueService;
 import org.springframework.stereotype.Service;
@@ -14,13 +20,17 @@ import java.util.List;
 public class Filiere_langueServiceImpl implements Filiere_langueService {
 
     protected final Filiere_langueRepository filiere_langueRepository;
+    protected final ComposanteRepository composanteRepository;
+    protected final CoursRepository coursRepository;
 
-    public Filiere_langueServiceImpl(Filiere_langueRepository filiere_langueRepository) {
+    public Filiere_langueServiceImpl(Filiere_langueRepository filiere_langueRepository, ComposanteRepository composanteRepository, CoursRepository coursRepository) {
         this.filiere_langueRepository = filiere_langueRepository;
+        this.composanteRepository = composanteRepository;
+        this.coursRepository = coursRepository;
     }
 
     @Override
-    public Filiere_langueDto addFiliere_langue(Filiere_langueDto filiere_langueDto) {
+    public Filiere_langueDto newFiliere_langue(Filiere_langueDto filiere_langueDto) {
         Filiere_langue filiere_langue = filiere_langueDtoToEntity(filiere_langueDto);
         filiere_langue = filiere_langueRepository.save(filiere_langue);
         return filiere_langueEntityToDto(filiere_langue);
@@ -53,6 +63,50 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
         Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
         filiere_langue.setCode(filiere_langueDto.getCode());
         filiere_langue.setNom(filiere_langueDto.getNom());
+        filiere_langue = filiere_langueRepository.save(filiere_langue);
+        return filiere_langueEntityToDto(filiere_langue);
+    }
+
+    @Override
+    public Filiere_langueDto addComposante(Filiere_langueDto filiere_langueDto) {
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
+        Composante composante = composanteRepository.findById(filiere_langueDto.getComposanteDto().getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        filiere_langue.setComposante(composante);
+        composante.addFiliere_langue(filiere_langue);
+        composanteRepository.save(composante);
+        filiere_langue = filiere_langueRepository.save(filiere_langue);
+        return filiere_langueEntityToDto(filiere_langue);
+    }
+
+    @Override
+    public Filiere_langueDto addCours(Filiere_langueDto filiere_langueDto) {
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
+        Cours cours = coursRepository.findById(filiere_langueDto.getCoursDtos().get(0).getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        filiere_langue.addCours(cours);
+        cours.addFiliere_langue(filiere_langue);
+        coursRepository.save(cours);
+        filiere_langue = filiere_langueRepository.save(filiere_langue);
+        return filiere_langueEntityToDto(filiere_langue);
+    }
+
+    @Override
+    public Filiere_langueDto removeComposante(Filiere_langueDto filiere_langueDto) {
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
+        Composante composante = composanteRepository.findById(filiere_langueDto.getComposanteDto().getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        filiere_langue.setComposante(null);
+        composante.removeFiliere_langue(filiere_langue);
+        composanteRepository.save(composante);
+        filiere_langue = filiere_langueRepository.save(filiere_langue);
+        return filiere_langueEntityToDto(filiere_langue);
+    }
+
+    @Override
+    public Filiere_langueDto removeCours(Filiere_langueDto filiere_langueDto) {
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
+        Cours cours = coursRepository.findById(filiere_langueDto.getCoursDtos().get(0).getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        filiere_langue.removeCours(cours);
+        cours.removeFiliere_langue(filiere_langue);
+        coursRepository.save(cours);
         filiere_langue = filiere_langueRepository.save(filiere_langue);
         return filiere_langueEntityToDto(filiere_langue);
     }

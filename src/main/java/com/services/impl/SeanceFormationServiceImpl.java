@@ -1,8 +1,10 @@
 package com.services.impl;
 
 import com.dtos.SeanceFormationDto;
-import com.entities.SeanceFormation;
+import com.entities.*;
+import com.repositories.CreneauRepository;
 import com.repositories.SeanceFormationRepository;
+import com.repositories.UtilisateurRepository;
 import com.services.SeanceFormationService;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,13 @@ import java.util.List;
 @Service("seanceFormationService")
 public class SeanceFormationServiceImpl implements SeanceFormationService {
     protected final SeanceFormationRepository seanceFormationRepository;
-    public SeanceFormationServiceImpl(SeanceFormationRepository seanceFormationRepository) {
+    protected final UtilisateurRepository utilisateurRepository;
+    protected final CreneauRepository creneauRepository;
+
+    public SeanceFormationServiceImpl(SeanceFormationRepository seanceFormationRepository, UtilisateurRepository utilisateurRepository, CreneauRepository creneauRepository) {
         this.seanceFormationRepository = seanceFormationRepository;
+        this.utilisateurRepository = utilisateurRepository;
+        this.creneauRepository = creneauRepository;
     }
 
     @Override
@@ -50,8 +57,52 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     }
 
     @Override
-    public SeanceFormationDto addSeanceFormation(SeanceFormationDto seanceFormationDto) {
+    public SeanceFormationDto newSeanceFormation(SeanceFormationDto seanceFormationDto) {
         SeanceFormation seanceFormation = seanceFormationDtoToEntity(seanceFormationDto);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto addIntervenant(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Intervenant intervenant = (Intervenant) utilisateurRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        seanceFormation.setIntervenant(intervenant);
+        intervenant.addSeanceFormation(seanceFormation);
+        seanceFormationRepository.save(seanceFormation);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto addCreneau(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Creneau creneau = creneauRepository.findById(seanceFormationDto.getCreneauDto().getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        seanceFormation.setCreneau(creneau);
+        creneau.addSeanceFormation(seanceFormation);
+        creneauRepository.save(creneau);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto removeIntervenant(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Intervenant intervenant = (Intervenant) utilisateurRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        seanceFormation.setIntervenant(null);
+        intervenant.removeSeanceFormation(seanceFormation);
+        utilisateurRepository.save(intervenant);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto removeCreneau(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Creneau creneau = creneauRepository.findById(seanceFormationDto.getCreneauDto().getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        seanceFormation.setCreneau(null);
+        creneau.removeSeanceFormation(seanceFormation);
+        creneauRepository.save(creneau);
         seanceFormation = seanceFormationRepository.save(seanceFormation);
         return seanceFormationEntityToDto(seanceFormation);
     }
@@ -73,5 +124,4 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormation.setCommentaire(seanceFormationDto.getCommentaire());
         return seanceFormation;
     }
-
 }

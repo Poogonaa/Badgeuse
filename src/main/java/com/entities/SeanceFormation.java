@@ -13,8 +13,10 @@ public class SeanceFormation {
     private int dureeEffective;
     private Boolean valide;
     private String commentaire;
+
     @ManyToOne @JoinColumn( name = "uti_id" )
     private Intervenant intervenant;
+
     @ManyToOne @JoinColumn( name = "cre_id" )
     private Creneau creneau;
 }

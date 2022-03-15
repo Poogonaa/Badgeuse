@@ -36,7 +36,7 @@ public class UtilisateurController {
         return utilisateurService.deleteUtilisateur(id);
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public UtilisateurDto connection(final @RequestBody UtilisateurDto utilisateurDto){
         return utilisateurService.connection(utilisateurDto);
     }
