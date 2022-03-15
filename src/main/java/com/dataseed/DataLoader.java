@@ -166,7 +166,7 @@ public class DataLoader implements CommandLineRunner {
             SeanceFormation seanceNonEffectue = new SeanceFormation();
             seanceNonEffectue.setCreneau(creneauRepository.getById(new Long(2)));
             seanceNonEffectue.setDureeEffective(0);
-            seanceNonEffectue.setIntervenant(interRepository.getById(new Long(1)));
+            seanceNonEffectue.setIntervenant(interRepository.getById(new Long(3)));
             seanceNonEffectue.setEstEffectue(false);
 
             seanceRepository.save(seanceNonEffectue);

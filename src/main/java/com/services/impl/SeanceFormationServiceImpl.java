@@ -42,6 +42,23 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         return seanceFormationDtos;
     }
 
+
+    @Override
+    public List<SeanceFormationDto> getAllSeancesFormationsByIntervenant(Long id){
+        List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
+        //on enlève ceux qui n'ont pas pour Intervenant celui que l'on veut
+        for(SeanceFormation seance : seanceFormations){
+            if(seance.getIntervenant().getUti_id() != id){
+                seanceFormations.remove(seance);
+            }
+        }
+        seanceFormations.forEach(seanceFormation -> {
+            seanceFormationDtos.add(seanceFormationEntityToDto(seanceFormation));
+        });
+        return seanceFormationDtos;
+    }
+
     @Override
     public SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFormationDto) {
         SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("seance not found"));

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("seancesformations")
 public class SeanceFormationController {
 
     private final SeanceFormationServiceImpl seanceFormationService;
@@ -24,6 +24,13 @@ public class SeanceFormationController {
     public SeanceFormationDto getSeanceFormation(@PathVariable Long id){
         return seanceFormationService.getSeanceFormationById(id);
     }
+
+    @GetMapping("/intervenant/{id}")
+    public List<SeanceFormationDto> getSeanceFormationsByIntervenant(@PathVariable Long id){
+        return seanceFormationService.getAllSeancesFormationsByIntervenant(id);
+    }
+
+
 
     @DeleteMapping("/{id}")
     public Boolean deleteSeanceFormation(@PathVariable Long id){
