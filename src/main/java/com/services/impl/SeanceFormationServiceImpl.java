@@ -2,9 +2,12 @@ package com.services.impl;
 
 import com.dtos.SeanceFormationDto;
 import com.entities.SeanceFormation;
+import com.entities.Utilisateur;
 import com.repositories.SeanceFormationRepository;
 import com.services.SeanceFormationService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -54,6 +57,14 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         SeanceFormation seanceFormation = seanceFormationDtoToEntity(seanceFormationDto);
         seanceFormation = seanceFormationRepository.save(seanceFormation);
         return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto valider(SeanceFormationDto seanceFormationDto){
+        SeanceFormation seance = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        seance.setValide(seanceFormationDto.getValide());
+        seance = seanceFormationRepository.save(seance);
+        return seanceFormationEntityToDto(seance);
     }
 
     private SeanceFormationDto seanceFormationEntityToDto(SeanceFormation seanceFormation){

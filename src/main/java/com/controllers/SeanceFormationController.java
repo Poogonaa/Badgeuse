@@ -34,4 +34,9 @@ public class SeanceFormationController {
     public SeanceFormationDto addSeanceFormation(final @RequestBody SeanceFormationDto seanceFormationDto){
         return seanceFormationService.addSeanceFormation(seanceFormationDto);
     }
+
+    @PutMapping("/valider")
+    public SeanceFormationDto valider(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.valider(seanceFormationDto);
+    }
 }

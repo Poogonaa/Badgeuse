@@ -1,6 +1,8 @@
 package com.services;
 
 import com.dtos.SeanceFormationDto;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -14,4 +16,6 @@ public interface SeanceFormationService {
     SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFromationDto);
 
     SeanceFormationDto addSeanceFormation(SeanceFormationDto seanceFormationDto);
+
+    SeanceFormationDto valider(SeanceFormationDto seanceFormationDto);
 }
