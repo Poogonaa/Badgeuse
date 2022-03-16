@@ -74,6 +74,17 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     }
 
     @Override
+    public List<SeanceFormationDto> getAllSeancesFormationsValide(){
+        List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = new ArrayList<>();
+        for (SeanceFormation seance : seanceFormations){
+            if(seance.getValide())
+                seanceFormationDtos.add(seanceFormationEntityToDto(seance));
+        }
+        return seanceFormationDtos;
+    }
+
+    @Override
     public SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFormationDto) {
         SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("seance not found"));
         seanceFormation.setEstEffectue(seanceFormationDto.getEstEffectue());

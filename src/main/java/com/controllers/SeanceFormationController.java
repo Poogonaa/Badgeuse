@@ -37,6 +37,11 @@ public class SeanceFormationController {
         return seanceFormationService.getAllSeancesFormationsEffectueesByIntervenant(id);
     }
 
+    @GetMapping("/valide/intervenant")
+    public List<SeanceFormationDto> getSeanceFormationValide(){
+        return seanceFormationService.getAllSeancesFormationsValide();
+    }
+
     @DeleteMapping("/{id}")
     public Boolean deleteSeanceFormation(@PathVariable Long id){
         return seanceFormationService.deleteSeanceFormation(id);
