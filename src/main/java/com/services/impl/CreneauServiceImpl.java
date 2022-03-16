@@ -57,7 +57,7 @@ public class CreneauServiceImpl implements CreneauService {
 
     @Override
     public CreneauDto editCreneau(CreneauDto creneauDto) {
-        Creneau creneau = creaneauRepository.findById(creneauDto.getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        Creneau creneau = creneauRepository.findById(creneauDto.getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
         creneau.setDate(creneauDto.getDate());
         creneau.setHeure_debut(creneauDto.getHeure_debut());
 
