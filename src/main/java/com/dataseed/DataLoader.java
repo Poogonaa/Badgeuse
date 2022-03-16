@@ -135,7 +135,8 @@ public class DataLoader implements CommandLineRunner {
         if (creneauRepository.count() == 0) {
             Creneau anglais_matin = new Creneau();
             anglais_matin.setCours(coursRepository.getById(new Long(1)));
-            anglais_matin.setDate_heure("14-03-2022 8h");
+            anglais_matin.setDate("14-03-2022");
+            anglais_matin.setHeure_debut("8h00");
             anglais_matin.setSalle("micro 2.4");
             anglais_matin.setDuree(120);
             anglais_matin.setType("TP");
@@ -143,7 +144,8 @@ public class DataLoader implements CommandLineRunner {
 
             Creneau anglais_soir = new Creneau();
             anglais_soir.setCours(coursRepository.getById(new Long(1)));
-            anglais_soir.setDate_heure("14-03-2022 15h30");
+            anglais_soir.setHeure_debut("15h30");
+            anglais_soir.setDate("14-03-2022");
             anglais_soir.setSalle("micro 2.4");
             anglais_soir.setDuree(120);
             anglais_soir.setType("TD");

@@ -50,7 +50,8 @@ public class CreneauServiceImpl implements CreneauService {
     @Override
     public CreneauDto editCreneau(CreneauDto creneauDto) {
         Creneau creneau = creaneauRepository.findById(creneauDto.getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
-        creneau.setDate_heure(creneauDto.getDate_heure());
+        creneau.setDate(creneauDto.getDate());
+        creneau.setHeure_debut(creneauDto.getHeure_debut());
         creneau.setDuree(creneauDto.getDuree());
         creneau.setType(creneauDto.getType());
         creneau.setSalle(creneauDto.getSalle());
@@ -60,7 +61,8 @@ public class CreneauServiceImpl implements CreneauService {
     private Creneau creneauDtoToEntity(CreneauDto creneauDto){
         Creneau creneau = new Creneau();
         creneau.setCre_id(creneauDto.getCre_id());
-        creneau.setDate_heure(creneauDto.getDate_heure());
+        creneau.setDate(creneauDto.getDate());
+        creneau.setHeure_debut(creneau.getHeure_debut());
         creneau.setDuree(creneauDto.getDuree());
         creneau.setType(creneauDto.getType());
         creneau.setSalle(creneauDto.getSalle());
@@ -70,7 +72,8 @@ public class CreneauServiceImpl implements CreneauService {
     private CreneauDto creneauEntityToDto(Creneau creneau){
         CreneauDto creneauDto = new CreneauDto();
         creneauDto.setCre_id(creneau.getCre_id());
-        creneauDto.setDate_heure(creneau.getDate_heure());
+        creneauDto.setDate(creneau.getDate());
+        creneauDto.setHeure_debut(creneau.getHeure_debut());
         creneauDto.setDuree(creneau.getDuree());
         creneauDto.setType(creneau.getType());
         creneauDto.setSalle(creneau.getSalle());
