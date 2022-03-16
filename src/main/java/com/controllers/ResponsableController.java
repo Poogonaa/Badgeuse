@@ -5,6 +5,8 @@ import com.dtos.UtilisateurDto;
 import com.services.impl.ResponsableServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/responsables")
 public class ResponsableController {
@@ -18,6 +20,26 @@ public class ResponsableController {
     @PostMapping
     public UtilisateurDto addResponsable(final @RequestBody ResponsableDto utilisateurDto){
         return responsableService.newResponsable(utilisateurDto);
+    }
+
+    @GetMapping("/multi")
+    public List<ResponsableDto> getResponsable() {
+        return responsableService.getAllResponsables();
+    }
+
+    @GetMapping("/{id}")
+    public ResponsableDto getResponsable(@PathVariable Long id){
+        return responsableService.getResponsableById(id);
+    }
+
+    @PutMapping
+    public ResponsableDto editResponsable(final @RequestBody ResponsableDto responsableDto){
+        return responsableService.editResponsable(responsableDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public Boolean deleteResponsable(@PathVariable Long id){
+        return responsableService.deleteResponsable(id);
     }
 
     @PutMapping("/addComposante")

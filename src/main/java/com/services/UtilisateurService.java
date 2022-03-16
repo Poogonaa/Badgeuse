@@ -7,9 +7,7 @@ import java.util.List;
 public interface UtilisateurService {
     UtilisateurDto getUtilisateurById(Long id);
 
-    boolean deleteUtilisateur(Long id);
-
     List<UtilisateurDto> getAllUtilisateurs();
 
-    UtilisateurDto editUtilisateur(UtilisateurDto utilisateurDto);
+    UtilisateurDto connection(UtilisateurDto utilisateurDto);
 }

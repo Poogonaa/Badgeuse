@@ -1,13 +1,22 @@
 package com.services;
 
-import com.dtos.ComposanteDto;
+import com.dtos.GestionnaireDto;
 import com.dtos.ResponsableDto;
-import com.dtos.UtilisateurDto;
 
-public interface ResponsableService extends UtilisateurService{
-    UtilisateurDto newResponsable(ResponsableDto utilisateurDto);
+import java.util.List;
 
-    UtilisateurDto addComposante(ResponsableDto utilisateurDto);
+public interface ResponsableService{
+    ResponsableDto newResponsable(ResponsableDto responsableDto);
 
-    UtilisateurDto removeComposante(ResponsableDto utilisateurDto);
+    ResponsableDto getResponsableById(Long id);
+
+    boolean deleteResponsable(Long id);
+
+    List<ResponsableDto> getAllResponsables();
+
+    ResponsableDto editResponsable(ResponsableDto responsableDto);
+
+    ResponsableDto addComposante(ResponsableDto responsableDto);
+
+    ResponsableDto removeComposante(ResponsableDto responsableDto);
 }

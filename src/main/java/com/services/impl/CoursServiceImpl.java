@@ -135,6 +135,9 @@ public class CoursServiceImpl implements CoursService {
         Cours cours = new Cours();
         cours.setCou_id(coursDto.getCou_id());
         cours.setIntitule(coursDto.getIntitule());
+        cours.setCreneaux(new ArrayList<>());
+        cours.setFiliere_langues(new ArrayList<>());
+        cours.setIntervenants(new ArrayList<>());
         return cours;
     }
 
@@ -142,6 +145,42 @@ public class CoursServiceImpl implements CoursService {
         CoursDto coursDto = new CoursDto();
         coursDto.setCou_id(cours.getCou_id());
         coursDto.setIntitule(cours.getIntitule());
+
+        List<IntervenantDto> intervenantDtos = new ArrayList<>();
+        for(Intervenant intervenant : cours.getIntervenants()){
+            IntervenantDto utilisateurDto = new IntervenantDto();
+            utilisateurDto.setUti_id(intervenant.getUti_id());
+            utilisateurDto.setLogin(intervenant.getLogin());
+            utilisateurDto.setMdp(intervenant.getMdp());
+            utilisateurDto.setNom(intervenant.getNom());
+            utilisateurDto.setPrenom(intervenant.getPrenom());
+            utilisateurDto.setMail(intervenant.getMail());
+            intervenantDtos.add(utilisateurDto);
+        }
+        coursDto.setIntervenantDtos(intervenantDtos);
+
+        List<Filiere_langueDto> filiere_langueDtos = new ArrayList<>();
+        for(Filiere_langue filiere_langue : cours.getFiliere_langues()){
+            Filiere_langueDto filiere_langueDto = new Filiere_langueDto();
+            filiere_langueDto.setFil_id(filiere_langue.getFil_id());
+            filiere_langueDto.setCode(filiere_langue.getCode());
+            filiere_langueDto.setNom(filiere_langue.getNom());
+            filiere_langueDtos.add(filiere_langueDto);
+        }
+        coursDto.setFiliere_langueDtos(filiere_langueDtos);
+
+        List<CreneauDto> creneauDtos = new ArrayList<>();
+        for(Creneau creneau : cours.getCreneaux()){
+            CreneauDto creneauDto = new CreneauDto();
+            creneauDto.setCre_id(creneau.getCre_id());
+            creneauDto.setDate(creneau.getDate());
+            creneauDto.setHeure_debut(creneau.getHeure_debut());
+            creneauDto.setDuree(creneau.getDuree());
+            creneauDto.setType(creneau.getType());
+            creneauDto.setSalle(creneau.getSalle());
+            creneauDtos.add(creneauDto);
+        }
+        coursDto.setCreneauDtos(creneauDtos);
         return coursDto;
     }
 }

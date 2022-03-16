@@ -1,5 +1,7 @@
 package com.services.impl;
 
+import com.dtos.CreneauDto;
+import com.dtos.IntervenantDto;
 import com.dtos.SeanceFormationDto;
 import com.entities.*;
 import com.repositories.CreneauRepository;
@@ -68,11 +70,9 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
         List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
         //on enlève ceux qui n'ont pas pour Intervenant ciblé ou qui ne sont pas effectuées.
-        for(int i = 0 ; i < seanceFormations.size() ; i++){
-            SeanceFormation seance = seanceFormations.get(i);
+        for(SeanceFormation seance : seanceFormations){
             if(Objects.equals(seance.getIntervenant().getUti_id(), id) && seance.getEstEffectue())
                 seanceFormationDtos.add(seanceFormationEntityToDto(seance));
-            i++;
         }
         return seanceFormationDtos;
     }
@@ -80,9 +80,9 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     @Override
     public List<SeanceFormationDto> getAllSeancesFormationsValide(){
         List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
-        List<SeanceFormation> seanceFormations = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
         for (SeanceFormation seance : seanceFormations){
-            if(seance.getValide())
+            if(seance.getValide() != null && seance.getValide())
                 seanceFormationDtos.add(seanceFormationEntityToDto(seance));
         }
         return seanceFormationDtos;
@@ -163,6 +163,28 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormationDto.setValide(seanceFormation.getValide());
         seanceFormationDto.setEstEffectue(seanceFormation.getEstEffectue());
         seanceFormationDto.setCommentaire(seanceFormation.getCommentaire());
+
+        if(!seanceFormation.getIntervenant().equals(null)){
+            IntervenantDto intervenantDto = new IntervenantDto();
+            intervenantDto.setUti_id(seanceFormation.getIntervenant().getUti_id());
+            intervenantDto.setLogin(seanceFormation.getIntervenant().getLogin());
+            intervenantDto.setMdp(seanceFormation.getIntervenant().getMdp());
+            intervenantDto.setNom(seanceFormation.getIntervenant().getNom());
+            intervenantDto.setPrenom(seanceFormation.getIntervenant().getPrenom());
+            intervenantDto.setMail(seanceFormation.getIntervenant().getMail());
+            seanceFormationDto.setIntervenantDto(intervenantDto);
+        }
+
+        if(!seanceFormation.getCreneau().equals(null)){
+            CreneauDto creneauDto = new CreneauDto();
+            creneauDto.setCre_id(seanceFormation.getCreneau().getCre_id());
+            creneauDto.setDate(seanceFormation.getCreneau().getDate());
+            creneauDto.setHeure_debut(seanceFormation.getCreneau().getHeure_debut());
+            creneauDto.setDuree(seanceFormation.getCreneau().getDuree());
+            creneauDto.setType(seanceFormation.getCreneau().getType());
+            creneauDto.setSalle(seanceFormation.getCreneau().getSalle());
+            seanceFormationDto.setCreneauDto(creneauDto);
+        }
         return seanceFormationDto;
     }
 
@@ -173,6 +195,8 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormation.setValide(seanceFormationDto.getValide());
         seanceFormation.setEstEffectue(seanceFormationDto.getEstEffectue());
         seanceFormation.setCommentaire(seanceFormationDto.getCommentaire());
+        seanceFormation.setIntervenant(null);
+        seanceFormation.setCreneau(null);
         return seanceFormation;
     }
 }
