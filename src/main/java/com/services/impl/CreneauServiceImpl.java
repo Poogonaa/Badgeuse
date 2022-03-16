@@ -1,6 +1,8 @@
 package com.services.impl;
 
+import com.dtos.CoursDto;
 import com.dtos.CreneauDto;
+import com.dtos.SeanceFormationDto;
 import com.entities.*;
 import com.repositories.CoursRepository;
 import com.repositories.CreneauRepository;
@@ -58,7 +60,9 @@ public class CreneauServiceImpl implements CreneauService {
     @Override
     public CreneauDto editCreneau(CreneauDto creneauDto) {
         Creneau creneau = creneauRepository.findById(creneauDto.getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
-        creneau.setDate_heure(creneauDto.getDate_heure());
+        creneau.setDate(creneauDto.getDate());
+        creneau.setHeure_debut(creneauDto.getHeure_debut());
+
         creneau.setDuree(creneauDto.getDuree());
         creneau.setType(creneauDto.getType());
         creneau.setSalle(creneauDto.getSalle());
@@ -112,20 +116,44 @@ public class CreneauServiceImpl implements CreneauService {
     private Creneau creneauDtoToEntity(CreneauDto creneauDto){
         Creneau creneau = new Creneau();
         creneau.setCre_id(creneauDto.getCre_id());
-        creneau.setDate_heure(creneauDto.getDate_heure());
+        creneau.setDate(creneauDto.getDate());
+        creneau.setHeure_debut(creneau.getHeure_debut());
         creneau.setDuree(creneauDto.getDuree());
         creneau.setType(creneauDto.getType());
         creneau.setSalle(creneauDto.getSalle());
+        creneau.setCours(null);
+        creneau.setSeanceFormations(new ArrayList<>());
         return creneau;
     }
 
     private CreneauDto creneauEntityToDto(Creneau creneau){
         CreneauDto creneauDto = new CreneauDto();
         creneauDto.setCre_id(creneau.getCre_id());
-        creneauDto.setDate_heure(creneau.getDate_heure());
+        creneauDto.setDate(creneau.getDate());
+        creneauDto.setHeure_debut(creneau.getHeure_debut());
         creneauDto.setDuree(creneau.getDuree());
         creneauDto.setType(creneau.getType());
         creneauDto.setSalle(creneau.getSalle());
+
+        if(!creneau.getCours().equals(null)){
+            CoursDto coursDto = new CoursDto();
+            coursDto.setCou_id(creneau.getCours().getCou_id());
+            coursDto.setIntitule(creneau.getCours().getIntitule());
+            creneauDto.setCoursDto(coursDto);
+        }
+
+        List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
+        for(SeanceFormation seanceFormation : creneau.getSeanceFormations()){
+            SeanceFormationDto seanceFormationDto = new SeanceFormationDto();
+            seanceFormationDto.setSea_id(seanceFormation.getSea_id());
+            seanceFormationDto.setDureeEffective(seanceFormation.getDureeEffective());
+            seanceFormationDto.setValide(seanceFormation.getValide());
+            seanceFormationDto.setEstEffectue(seanceFormation.getEstEffectue());
+            seanceFormationDto.setCommentaire(seanceFormation.getCommentaire());
+            seanceFormationDtos.add(seanceFormationDto);
+        }
+        creneauDto.setSeanceFormationDtos(seanceFormationDtos);
+
         return creneauDto;
     }
 }

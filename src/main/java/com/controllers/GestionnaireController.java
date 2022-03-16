@@ -1,12 +1,10 @@
 package com.controllers;
 
 import com.dtos.GestionnaireDto;
-import com.dtos.UtilisateurDto;
 import com.services.impl.GestionnaireServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/gestionnaires")
@@ -18,7 +16,27 @@ public class GestionnaireController {
     }
 
     @PostMapping
-    public UtilisateurDto addGestionnaire(final @RequestBody GestionnaireDto utilisateurDto){
+    public GestionnaireDto addGestionnaire(final @RequestBody GestionnaireDto utilisateurDto){
         return gestionnaireService.newGestionnaire(utilisateurDto);
+    }
+
+    @GetMapping("/multi")
+    public List<GestionnaireDto> getGestionnaire() {
+        return gestionnaireService.getAllGestionnaires();
+    }
+
+    @GetMapping("/{id}")
+    public GestionnaireDto getGestonnaire(@PathVariable Long id){
+        return gestionnaireService.getGestionnaireById(id);
+    }
+
+    @PutMapping
+    public GestionnaireDto editGestionnaire(final @RequestBody GestionnaireDto gestionnaireDto){
+        return gestionnaireService.editGestionnaire(gestionnaireDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public Boolean deleteGestionnaire(@PathVariable Long id){
+        return gestionnaireService.deleteGestionnaire(id);
     }
 }

@@ -26,16 +26,6 @@ public class UtilisateurController {
         return utilisateurService.getUtilisateurById(id);
     }
 
-    @PutMapping
-    public UtilisateurDto editUtilisateur(final @RequestBody UtilisateurDto utilisateurDto){
-        return utilisateurService.editUtilisateur(utilisateurDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public Boolean deleteUtilisateur(@PathVariable Long id){
-        return utilisateurService.deleteUtilisateur(id);
-    }
-
     @PostMapping("/login")
     public UtilisateurDto connection(final @RequestBody UtilisateurDto utilisateurDto){
         return utilisateurService.connection(utilisateurDto);

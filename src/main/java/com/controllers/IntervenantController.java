@@ -1,9 +1,10 @@
 package com.controllers;
 
 import com.dtos.IntervenantDto;
-import com.dtos.UtilisateurDto;
 import com.services.impl.IntervenantServiceImpl;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/intervenants")
@@ -15,27 +16,47 @@ public class IntervenantController {
     }
 
     @PostMapping
-    public UtilisateurDto addIntervenant(final @RequestBody IntervenantDto utilisateurDto){
-        return intervenantService.newIntervenant(utilisateurDto);
+    public IntervenantDto addIntervenant(final @RequestBody IntervenantDto intervenantDto){
+        return intervenantService.newIntervenant(intervenantDto);
+    }
+
+    @GetMapping("/{id}")
+    public IntervenantDto getIntervenant(@PathVariable Long id){
+        return intervenantService.getIntervenantById(id);
+    }
+
+    @GetMapping("/multi")
+    public List<IntervenantDto> getIntervenants() {
+        return intervenantService.getAllIntervenants();
+    }
+
+    @PutMapping
+    public IntervenantDto editIntervenant(final @RequestBody IntervenantDto intervenantDto){
+        return intervenantService.editIntervenant(intervenantDto);
+    }
+
+    @DeleteMapping("/{id}")
+    public Boolean deleteIntervenant(@PathVariable Long id){
+        return intervenantService.deleteIntervenant(id);
     }
 
     @PutMapping("/addCours")
-    public UtilisateurDto addCours(final @RequestBody IntervenantDto utilisateurDto){
-        return intervenantService.addCours(utilisateurDto);
+    public IntervenantDto addCours(final @RequestBody IntervenantDto intervenantDto){
+        return intervenantService.addCours(intervenantDto);
     }
 
     @PutMapping("/removeCours")
-    public UtilisateurDto removeCrous(final @RequestBody IntervenantDto utilisateurDto){
-        return intervenantService.removeCours(utilisateurDto);
+    public IntervenantDto removeCrous(final @RequestBody IntervenantDto intervenantDto){
+        return intervenantService.removeCours(intervenantDto);
     }
 
     @PutMapping("/addSeanceFormation")
-    public UtilisateurDto addSeanceFormation(final @RequestBody IntervenantDto utilisateurDto){
-        return intervenantService.addSeanceFormation(utilisateurDto);
+    public IntervenantDto addSeanceFormation(final @RequestBody IntervenantDto intervenantDto){
+        return intervenantService.addSeanceFormation(intervenantDto);
     }
 
     @PutMapping("/removeSeanceFormation")
-    public UtilisateurDto removeSeanceFormation(final @RequestBody IntervenantDto utilisateurDto){
-        return intervenantService.removeSeanceFormation(utilisateurDto);
+    public IntervenantDto removeSeanceFormation(final @RequestBody IntervenantDto intervenantDto){
+        return intervenantService.removeSeanceFormation(intervenantDto);
     }
 }
