@@ -20,14 +20,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository, ResponsableRepository responsableRepository, GestionnaireRepository gestionnaireRepository, IntervenantRepository intervenantRepository) {
         this.utilisateurRepository = utilisateurRepository;
-        for(Utilisateur utilisateur : responsableRepository.findAll()){
-            this.utilisateurRepository.save(utilisateur);
+        for(Utilisateur responsable : responsableRepository.findAll()){
+            this.utilisateurRepository.save(responsable);
         }
-        for(Utilisateur utilisateur : gestionnaireRepository.findAll()){
-            this.utilisateurRepository.save(utilisateur);
+        for(Utilisateur gestionnaire : gestionnaireRepository.findAll()){
+            this.utilisateurRepository.save(gestionnaire);
         }
-        for(Utilisateur utilisateur : intervenantRepository.findAll()){
-            this.utilisateurRepository.save(utilisateur);
+        for(Utilisateur intervenant : intervenantRepository.findAll()){
+            this.utilisateurRepository.save(intervenant);
         }
     }
 
