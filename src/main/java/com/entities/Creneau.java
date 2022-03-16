@@ -15,8 +15,18 @@ public class Creneau {
     private Integer duree;
     private String type;
     private  String salle;
+
     @ManyToOne @JoinColumn( name = "cou_id" )
     private Cours cours;
+
     @OneToMany (targetEntity = SeanceFormation.class, mappedBy = "creneau" )
     private List<SeanceFormation> seanceFormations;
+
+    public void addSeanceFormation(SeanceFormation seanceFormation){
+        this.seanceFormations.add(seanceFormation);
+    }
+
+    public void removeSeanceFormation(SeanceFormation seanceFormation){
+        this.seanceFormations.remove(seanceFormation);
+    }
 }

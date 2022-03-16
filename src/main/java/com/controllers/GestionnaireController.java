@@ -1,5 +1,6 @@
 package com.controllers;
 
+import com.dtos.GestionnaireDto;
 import com.dtos.UtilisateurDto;
 import com.services.impl.GestionnaireServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ public class GestionnaireController {
     }
 
     @PostMapping
-    public UtilisateurDto addGestionnaire(final @RequestBody UtilisateurDto utilisateurDto){
-        return gestionnaireService.addGestionnaire(utilisateurDto);
+    public UtilisateurDto addGestionnaire(final @RequestBody GestionnaireDto utilisateurDto){
+        return gestionnaireService.newGestionnaire(utilisateurDto);
     }
 }

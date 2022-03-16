@@ -14,4 +14,12 @@ public class CreneauDto {
     private String salle;
     private CoursDto coursDto;
     private List<SeanceFormationDto> seanceFormationDtos;
+
+    public void addSeanceFormationDto(SeanceFormationDto seanceFormationDto){
+        this.seanceFormationDtos.add(seanceFormationDto);
+    }
+
+    public void removeSeanceFormationDto(SeanceFormationDto seanceFormationDto){
+        this.seanceFormationDtos.remove(seanceFormationDto);
+    }
 }

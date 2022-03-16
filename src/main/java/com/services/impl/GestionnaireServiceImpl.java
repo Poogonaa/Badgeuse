@@ -16,14 +16,14 @@ public class GestionnaireServiceImpl extends UtilisateurServiceImpl implements G
     }
 
     @Override
-    public UtilisateurDto addGestionnaire(UtilisateurDto utilisateurDto) {
+    public UtilisateurDto newGestionnaire(GestionnaireDto utilisateurDto) {
         Utilisateur utilisateur = gestionnaireDtoToEntity(utilisateurDto);
         utilisateur = utilisateurRepository.save(utilisateur);
         return gestionnaireEntityToDto(utilisateur);
     }
 
-    private Utilisateur gestionnaireDtoToEntity(UtilisateurDto utilisateurDto){
-        Utilisateur utilisateur = new Gestionnaire();
+    private Gestionnaire gestionnaireDtoToEntity(UtilisateurDto utilisateurDto){
+        Gestionnaire utilisateur = new Gestionnaire();
         utilisateur.setUti_id(utilisateurDto.getUti_id());
         utilisateur.setLogin(utilisateurDto.getLogin());
         utilisateur.setMdp(utilisateurDto.getMdp());
@@ -33,8 +33,8 @@ public class GestionnaireServiceImpl extends UtilisateurServiceImpl implements G
         return utilisateur;
     }
 
-    private UtilisateurDto gestionnaireEntityToDto(Utilisateur utilisateur){
-        UtilisateurDto utilisateurDto = new GestionnaireDto();
+    private GestionnaireDto gestionnaireEntityToDto(Utilisateur utilisateur){
+        GestionnaireDto utilisateurDto = new GestionnaireDto();
         utilisateurDto.setUti_id(utilisateur.getUti_id());
         utilisateurDto.setLogin(utilisateur.getLogin());
         utilisateurDto.setMdp(utilisateur.getMdp());

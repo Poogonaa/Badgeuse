@@ -1,11 +1,9 @@
 package com.controllers;
 
+import com.dtos.ResponsableDto;
 import com.dtos.UtilisateurDto;
 import com.services.impl.ResponsableServiceImpl;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/responsables")
@@ -17,8 +15,19 @@ public class ResponsableController {
         this.responsableService = responsableService;
     }
 
-    @PatchMapping
-    public UtilisateurDto addResponsable(final @RequestBody UtilisateurDto utilisateurDto){
-        return responsableService.addResponsable(utilisateurDto);
+    @PostMapping
+    public UtilisateurDto addResponsable(final @RequestBody ResponsableDto utilisateurDto){
+        return responsableService.newResponsable(utilisateurDto);
     }
+
+    @PutMapping("/addComposante")
+    public UtilisateurDto addComposante(final @RequestBody ResponsableDto utilisateurDto){
+        return responsableService.addComposante(utilisateurDto);
+    }
+
+    @PutMapping("/removeComposante")
+    public UtilisateurDto removeComposante(final @RequestBody ResponsableDto utilisateurDto){
+        return responsableService.removeComposante(utilisateurDto);
+    }
+
 }

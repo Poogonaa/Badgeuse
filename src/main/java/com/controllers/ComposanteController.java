@@ -1,19 +1,22 @@
 package com.controllers;
 
 import com.dtos.ComposanteDto;
-import com.entities.Composante;
 import com.services.impl.ComposanteServiceImpl;
+import com.services.impl.Filiere_langueServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/composantes")
 public class ComposanteController {
 
     private final ComposanteServiceImpl composanteService;
+    private final Filiere_langueServiceImpl filiere_langueService;
 
-    public ComposanteController(ComposanteServiceImpl composanteService){
+    public ComposanteController(ComposanteServiceImpl composanteService, Filiere_langueServiceImpl filiere_langueService){
         this.composanteService = composanteService;
+        this.filiere_langueService = filiere_langueService;
     }
 
     @GetMapping("/multi")
@@ -37,8 +40,28 @@ public class ComposanteController {
     }
 
     @PostMapping
-    public ComposanteDto addComposante(final @RequestBody ComposanteDto composanteDto){
-        return  composanteService.addComposante(composanteDto);
+    public ComposanteDto newComposante(final @RequestBody ComposanteDto composanteDto){
+        return  composanteService.newComposante(composanteDto);
+    }
+
+    @PutMapping("/addFiliere_langue")
+    public ComposanteDto addFiliere_langue(final @RequestBody ComposanteDto composanteDto){
+        return composanteService.addFiliere_langue(composanteDto);
+    }
+
+    @PutMapping("/removeFiliere_langue")
+    public ComposanteDto removeFiliere_langue(final @RequestBody ComposanteDto composanteDto){
+        return composanteService.removeFiliere_langue(composanteDto);
+    }
+
+    @PutMapping("/addResponsable")
+    public ComposanteDto addResponsable(final @RequestBody ComposanteDto composanteDto){
+        return composanteService.addResponsable(composanteDto);
+    }
+
+    @PutMapping("/removeResponsable")
+    public ComposanteDto removeResponsable(final @RequestBody ComposanteDto composanteDto){
+        return composanteService.removeResponsable(composanteDto);
     }
 }
 

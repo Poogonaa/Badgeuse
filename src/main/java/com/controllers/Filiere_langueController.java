@@ -18,7 +18,7 @@ public class Filiere_langueController {
 
     @PostMapping
     public Filiere_langueDto addFiliere_langue(final @RequestBody Filiere_langueDto filiere_langueDto){
-        return filiere_langueService.addFiliere_langue(filiere_langueDto);
+        return filiere_langueService.newFiliere_langue(filiere_langueDto);
     }
 
     @GetMapping("/multi")
@@ -39,5 +39,25 @@ public class Filiere_langueController {
     @DeleteMapping("/{id}")
     public Boolean deleteFiliere_langue(@PathVariable Long id){
         return filiere_langueService.deleteFiliere_langue(id);
+    }
+
+    @PutMapping("/addComposante")
+    public Filiere_langueDto addComposante(final @RequestBody Filiere_langueDto filiere_langueDto){
+        return filiere_langueService.addComposante(filiere_langueDto);
+    }
+
+    @PutMapping("/removeComposante")
+    public Filiere_langueDto removeComposante(final @RequestBody Filiere_langueDto filiere_langueDto){
+        return filiere_langueService.removeComposante(filiere_langueDto);
+    }
+
+    @PutMapping("/addCours")
+    public Filiere_langueDto addCours(final @RequestBody Filiere_langueDto filiere_langueDto){
+        return filiere_langueService.addCours(filiere_langueDto);
+    }
+
+    @PutMapping("/removeCours")
+    public Filiere_langueDto removeCrous(final @RequestBody Filiere_langueDto filiere_langueDto){
+        return filiere_langueService.removeCours(filiere_langueDto);
     }
 }

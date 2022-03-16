@@ -1,23 +1,30 @@
 package com.services.impl;
 
 import com.dtos.SeanceFormationDto;
+import com.entities.*;
+import com.repositories.CreneauRepository;
 import com.entities.SeanceFormation;
-import com.entities.Utilisateur;
 import com.repositories.SeanceFormationRepository;
+import com.repositories.UtilisateurRepository;
 import com.services.SeanceFormationService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service("seanceFormationService")
 public class SeanceFormationServiceImpl implements SeanceFormationService {
+
     protected final SeanceFormationRepository seanceFormationRepository;
-    public SeanceFormationServiceImpl(SeanceFormationRepository seanceFormationRepository) {
+    protected final UtilisateurRepository utilisateurRepository;
+    protected final CreneauRepository creneauRepository;
+
+    public SeanceFormationServiceImpl(SeanceFormationRepository seanceFormationRepository, UtilisateurRepository utilisateurRepository, CreneauRepository creneauRepository) {
         this.seanceFormationRepository = seanceFormationRepository;
+        this.utilisateurRepository = utilisateurRepository;
+        this.creneauRepository = creneauRepository;
     }
 
     @Override
@@ -36,9 +43,9 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     public List<SeanceFormationDto> getAllSeancesFormations() {
         List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
         List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
-        seanceFormations.forEach(seanceFormation -> {
+        for (SeanceFormation seanceFormation : seanceFormations) {
             seanceFormationDtos.add(seanceFormationEntityToDto(seanceFormation));
-        });
+        }
         return seanceFormationDtos;
     }
 
@@ -49,13 +56,35 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
         //on enlève ceux qui n'ont pas pour Intervenant celui que l'on veut
         for(SeanceFormation seance : seanceFormations){
-            if(seance.getIntervenant().getUti_id() != id){
-                seanceFormations.remove(seance);
+            if(Objects.equals(seance.getIntervenant().getUti_id(), id)){
+                seanceFormationDtos.add(seanceFormationEntityToDto(seance));
             }
         }
-        seanceFormations.forEach(seanceFormation -> {
-            seanceFormationDtos.add(seanceFormationEntityToDto(seanceFormation));
-        });
+        return seanceFormationDtos;
+    }
+
+    @Override
+    public List<SeanceFormationDto> getAllSeancesFormationsEffectueesByIntervenant(Long id){
+        List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
+        //on enlève ceux qui n'ont pas pour Intervenant ciblé ou qui ne sont pas effectuées.
+        for(int i = 0 ; i < seanceFormations.size() ; i++){
+            SeanceFormation seance = seanceFormations.get(i);
+            if(Objects.equals(seance.getIntervenant().getUti_id(), id) && seance.getEstEffectue())
+                seanceFormationDtos.add(seanceFormationEntityToDto(seance));
+            i++;
+        }
+        return seanceFormationDtos;
+    }
+
+    @Override
+    public List<SeanceFormationDto> getAllSeancesFormationsValide(){
+        List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = new ArrayList<>();
+        for (SeanceFormation seance : seanceFormations){
+            if(seance.getValide())
+                seanceFormationDtos.add(seanceFormationEntityToDto(seance));
+        }
         return seanceFormationDtos;
     }
 
@@ -70,13 +99,56 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     }
 
     @Override
-    public SeanceFormationDto addSeanceFormation(SeanceFormationDto seanceFormationDto) {
+    public SeanceFormationDto newSeanceFormation(SeanceFormationDto seanceFormationDto) {
         SeanceFormation seanceFormation = seanceFormationDtoToEntity(seanceFormationDto);
         seanceFormation = seanceFormationRepository.save(seanceFormation);
         return seanceFormationEntityToDto(seanceFormation);
     }
 
     @Override
+    public SeanceFormationDto addIntervenant(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Intervenant intervenant = (Intervenant) utilisateurRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        seanceFormation.setIntervenant(intervenant);
+        intervenant.addSeanceFormation(seanceFormation);
+        seanceFormationRepository.save(seanceFormation);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto addCreneau(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Creneau creneau = creneauRepository.findById(seanceFormationDto.getCreneauDto().getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        seanceFormation.setCreneau(creneau);
+        creneau.addSeanceFormation(seanceFormation);
+        creneauRepository.save(creneau);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto removeIntervenant(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Intervenant intervenant = (Intervenant) utilisateurRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        seanceFormation.setIntervenant(null);
+        intervenant.removeSeanceFormation(seanceFormation);
+        utilisateurRepository.save(intervenant);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
+    @Override
+    public SeanceFormationDto removeCreneau(SeanceFormationDto seanceFormationDto) {
+        SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
+        Creneau creneau = creneauRepository.findById(seanceFormationDto.getCreneauDto().getCre_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        seanceFormation.setCreneau(null);
+        creneau.removeSeanceFormation(seanceFormation);
+        creneauRepository.save(creneau);
+        seanceFormation = seanceFormationRepository.save(seanceFormation);
+        return seanceFormationEntityToDto(seanceFormation);
+    }
+
     public SeanceFormationDto valider(SeanceFormationDto seanceFormationDto){
         SeanceFormation seance = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
         seance.setValide(seanceFormationDto.getValide());
@@ -89,6 +161,7 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormationDto.setSea_id(seanceFormation.getSea_id());
         seanceFormationDto.setDureeEffective(seanceFormation.getDureeEffective());
         seanceFormationDto.setValide(seanceFormation.getValide());
+        seanceFormationDto.setEstEffectue(seanceFormation.getEstEffectue());
         seanceFormationDto.setCommentaire(seanceFormation.getCommentaire());
         return seanceFormationDto;
     }
@@ -98,8 +171,8 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormation.setSea_id(seanceFormationDto.getSea_id());
         seanceFormation.setDureeEffective(seanceFormationDto.getDureeEffective());
         seanceFormation.setValide(seanceFormationDto.getValide());
+        seanceFormation.setEstEffectue(seanceFormationDto.getEstEffectue());
         seanceFormation.setCommentaire(seanceFormationDto.getCommentaire());
         return seanceFormation;
     }
-
 }
