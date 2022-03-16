@@ -68,11 +68,9 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
         List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
         //on enlève ceux qui n'ont pas pour Intervenant ciblé ou qui ne sont pas effectuées.
-        for(int i = 0 ; i < seanceFormations.size() ; i++){
-            SeanceFormation seance = seanceFormations.get(i);
+        for(SeanceFormation seance : seanceFormations){
             if(Objects.equals(seance.getIntervenant().getUti_id(), id) && seance.getEstEffectue())
                 seanceFormationDtos.add(seanceFormationEntityToDto(seance));
-            i++;
         }
         return seanceFormationDtos;
     }
@@ -80,9 +78,9 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     @Override
     public List<SeanceFormationDto> getAllSeancesFormationsValide(){
         List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
-        List<SeanceFormation> seanceFormations = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
         for (SeanceFormation seance : seanceFormations){
-            if(seance.getValide())
+            if(seance.getValide() != null && seance.getValide())
                 seanceFormationDtos.add(seanceFormationEntityToDto(seance));
         }
         return seanceFormationDtos;

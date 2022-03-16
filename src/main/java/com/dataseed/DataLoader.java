@@ -160,7 +160,6 @@ public class DataLoader implements CommandLineRunner {
             seanceEffectue.setIntervenant(intervenantAnglais);
             seanceEffectue.setCommentaire("Le projecteur ne semble pas fonctionné.");
             seanceEffectue.setEstEffectue(true);
-
             seanceRepository.save(seanceEffectue);
 
             SeanceFormation seanceNonEffectue = new SeanceFormation();
@@ -168,8 +167,23 @@ public class DataLoader implements CommandLineRunner {
             seanceNonEffectue.setDureeEffective(0);
             seanceNonEffectue.setIntervenant(interRepository.getById(new Long(3)));
             seanceNonEffectue.setEstEffectue(false);
-
             seanceRepository.save(seanceNonEffectue);
+
+            SeanceFormation seanceValide = new SeanceFormation();
+            seanceValide.setCreneau(creneauRepository.getById(new Long(2)));
+            seanceValide.setDureeEffective(120);
+            seanceValide.setIntervenant(interRepository.getById(new Long(3)));
+            seanceValide.setEstEffectue(true);
+            seanceValide.setValide(true);
+            seanceRepository.save(seanceValide);
+
+            SeanceFormation seanceNonValide = new SeanceFormation();
+            seanceNonValide.setCreneau(creneauRepository.getById(new Long(2)));
+            seanceNonValide.setDureeEffective(1200);
+            seanceNonValide.setIntervenant(interRepository.getById(new Long(3)));
+            seanceNonValide.setEstEffectue(true);
+            seanceNonValide.setValide(false);
+            seanceRepository.save(seanceNonValide);
         }
     }
 
