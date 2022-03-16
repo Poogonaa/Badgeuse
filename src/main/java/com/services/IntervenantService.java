@@ -1,18 +1,25 @@
 package com.services;
 
-import com.dtos.CoursDto;
 import com.dtos.IntervenantDto;
-import com.dtos.SeanceFormationDto;
-import com.dtos.UtilisateurDto;
 
-public interface IntervenantService extends UtilisateurService{
-    UtilisateurDto newIntervenant(IntervenantDto utilisateurDto);
+import java.util.List;
 
-    UtilisateurDto addCours(IntervenantDto utilisateurDto);
+public interface IntervenantService{
+    IntervenantDto newIntervenant(IntervenantDto intervenantDto);
 
-    UtilisateurDto addSeanceFormation(IntervenantDto utilisateurDto);
+    IntervenantDto getIntervenantById(Long id);
 
-    UtilisateurDto removeCours(IntervenantDto utilisateurDto);
+    List<IntervenantDto> getAllIntervenants();
 
-    UtilisateurDto removeSeanceFormation(IntervenantDto utilisateurDto);
+    IntervenantDto editIntervenant(IntervenantDto intervenantDto);
+
+    IntervenantDto addCours(IntervenantDto intervenantDto);
+
+    IntervenantDto addSeanceFormation(IntervenantDto intervenantDto);
+
+    IntervenantDto removeCours(IntervenantDto intervenantDto);
+
+    IntervenantDto removeSeanceFormation(IntervenantDto intervenantDto);
+
+    boolean deleteIntervenant(Long id);
 }

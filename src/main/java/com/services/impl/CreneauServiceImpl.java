@@ -1,6 +1,8 @@
 package com.services.impl;
 
+import com.dtos.CoursDto;
 import com.dtos.CreneauDto;
+import com.dtos.SeanceFormationDto;
 import com.entities.*;
 import com.repositories.CoursRepository;
 import com.repositories.CreneauRepository;
@@ -116,6 +118,8 @@ public class CreneauServiceImpl implements CreneauService {
         creneau.setDuree(creneauDto.getDuree());
         creneau.setType(creneauDto.getType());
         creneau.setSalle(creneauDto.getSalle());
+        creneau.setCours(null);
+        creneau.setSeanceFormations(new ArrayList<>());
         return creneau;
     }
 
@@ -126,6 +130,26 @@ public class CreneauServiceImpl implements CreneauService {
         creneauDto.setDuree(creneau.getDuree());
         creneauDto.setType(creneau.getType());
         creneauDto.setSalle(creneau.getSalle());
+
+        if(!creneau.getCours().equals(null)){
+            CoursDto coursDto = new CoursDto();
+            coursDto.setCou_id(creneau.getCours().getCou_id());
+            coursDto.setIntitule(creneau.getCours().getIntitule());
+            creneauDto.setCoursDto(coursDto);
+        }
+
+        List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
+        for(SeanceFormation seanceFormation : creneau.getSeanceFormations()){
+            SeanceFormationDto seanceFormationDto = new SeanceFormationDto();
+            seanceFormationDto.setSea_id(seanceFormation.getSea_id());
+            seanceFormationDto.setDureeEffective(seanceFormation.getDureeEffective());
+            seanceFormationDto.setValide(seanceFormation.getValide());
+            seanceFormationDto.setEstEffectue(seanceFormation.getEstEffectue());
+            seanceFormationDto.setCommentaire(seanceFormation.getCommentaire());
+            seanceFormationDtos.add(seanceFormationDto);
+        }
+        creneauDto.setSeanceFormationDtos(seanceFormationDtos);
+
         return creneauDto;
     }
 }

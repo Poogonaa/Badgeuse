@@ -1,5 +1,7 @@
 package com.services.impl;
 
+import com.dtos.ComposanteDto;
+import com.dtos.CoursDto;
 import com.dtos.Filiere_langueDto;
 import com.entities.Composante;
 import com.entities.Cours;
@@ -114,6 +116,8 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
         filiere_langue.setFil_id(filiere_langueDto.getFil_id());
         filiere_langue.setCode(filiere_langueDto.getCode());
         filiere_langue.setNom(filiere_langueDto.getNom());
+        filiere_langue.setComposante(null);
+        filiere_langue.setCours(new ArrayList<>());
         return filiere_langue;
     }
 
@@ -122,6 +126,21 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
         filiere_langueDto.setFil_id(filiere_langue.getFil_id());
         filiere_langueDto.setCode(filiere_langue.getCode());
         filiere_langueDto.setNom(filiere_langue.getNom());
+
+        if(!filiere_langue.getComposante().equals(null)){
+            ComposanteDto composanteDto = new ComposanteDto();
+            composanteDto.setCom_id(filiere_langue.getComposante().getCom_id());
+            composanteDto.setNomComposante(filiere_langue.getComposante().getNomComposante());
+        }
+
+        List<CoursDto> coursDtos = new ArrayList<>();
+        for(Cours cours : filiere_langue.getCours()){
+            CoursDto coursDto = new CoursDto();
+            coursDto.setCou_id(cours.getCou_id());
+            coursDto.setIntitule(cours.getIntitule());
+            coursDtos.add(coursDto);
+        }
+        filiere_langueDto.setCoursDtos(coursDtos);
         return filiere_langueDto;
     }
 }

@@ -1,6 +1,8 @@
 package com.services.impl;
 
 import com.dtos.ComposanteDto;
+import com.dtos.Filiere_langueDto;
+import com.dtos.ResponsableDto;
 import com.entities.Composante;
 import com.entities.Filiere_langue;
 import com.entities.Responsable;
@@ -110,6 +112,8 @@ public class ComposanteServiceImpl implements ComposanteService {
         Composante composante = new Composante();
         composante.setCom_id(composanteDto.getCom_id());
         composante.setNomComposante(composanteDto.getNomComposante());
+        composante.setResponsables(new ArrayList<>());
+        composante.setFiliere_langues(new ArrayList<>());
         return composante;
     }
 
@@ -117,6 +121,29 @@ public class ComposanteServiceImpl implements ComposanteService {
         ComposanteDto composanteDto = new ComposanteDto();
         composanteDto.setCom_id(composante.getCom_id());
         composanteDto.setNomComposante(composante.getNomComposante());
+
+        List<Filiere_langueDto> filiere_langueDtos = new ArrayList<>();
+        for(Filiere_langue filiere_langue : composante.getFiliere_langues()){
+            Filiere_langueDto filiere_langueDto = new Filiere_langueDto();
+            filiere_langueDto.setFil_id(filiere_langue.getFil_id());
+            filiere_langueDto.setCode(filiere_langue.getCode());
+            filiere_langueDto.setNom(filiere_langue.getNom());
+            filiere_langueDtos.add(filiere_langueDto);
+        }
+        composanteDto.setFiliere_langueDtos(filiere_langueDtos);
+
+        List<ResponsableDto> responsableDtos = new ArrayList<>();
+        for(Responsable responsable : composante.getResponsables()){
+            ResponsableDto utilisateurDto = new ResponsableDto();
+            utilisateurDto.setUti_id(responsable.getUti_id());
+            utilisateurDto.setLogin(responsable.getLogin());
+            utilisateurDto.setMdp(responsable.getMdp());
+            utilisateurDto.setNom(responsable.getNom());
+            utilisateurDto.setPrenom(responsable.getPrenom());
+            utilisateurDto.setMail(responsable.getMail());
+            responsableDtos.add(utilisateurDto);
+        }
+        composanteDto.setResponsableDtos(responsableDtos);
         return composanteDto;
     }
 }

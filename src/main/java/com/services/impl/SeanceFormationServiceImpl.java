@@ -1,5 +1,7 @@
 package com.services.impl;
 
+import com.dtos.CreneauDto;
+import com.dtos.IntervenantDto;
 import com.dtos.SeanceFormationDto;
 import com.entities.*;
 import com.repositories.CreneauRepository;
@@ -152,6 +154,27 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormationDto.setValide(seanceFormation.getValide());
         seanceFormationDto.setEstEffectue(seanceFormation.getEstEffectue());
         seanceFormationDto.setCommentaire(seanceFormation.getCommentaire());
+
+        if(!seanceFormation.getIntervenant().equals(null)){
+            IntervenantDto intervenantDto = new IntervenantDto();
+            intervenantDto.setUti_id(seanceFormation.getIntervenant().getUti_id());
+            intervenantDto.setLogin(seanceFormation.getIntervenant().getLogin());
+            intervenantDto.setMdp(seanceFormation.getIntervenant().getMdp());
+            intervenantDto.setNom(seanceFormation.getIntervenant().getNom());
+            intervenantDto.setPrenom(seanceFormation.getIntervenant().getPrenom());
+            intervenantDto.setMail(seanceFormation.getIntervenant().getMail());
+            seanceFormationDto.setIntervenantDto(intervenantDto);
+        }
+
+        if(!seanceFormation.getCreneau().equals(null)){
+            CreneauDto creneauDto = new CreneauDto();
+            creneauDto.setCre_id(seanceFormation.getCreneau().getCre_id());
+            creneauDto.setDate_heure(seanceFormation.getCreneau().getDate_heure());
+            creneauDto.setDuree(seanceFormation.getCreneau().getDuree());
+            creneauDto.setType(seanceFormation.getCreneau().getType());
+            creneauDto.setSalle(seanceFormation.getCreneau().getSalle());
+            seanceFormationDto.setCreneauDto(creneauDto);
+        }
         return seanceFormationDto;
     }
 
@@ -162,6 +185,8 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormation.setValide(seanceFormationDto.getValide());
         seanceFormation.setEstEffectue(seanceFormationDto.getEstEffectue());
         seanceFormation.setCommentaire(seanceFormationDto.getCommentaire());
+        seanceFormation.setIntervenant(null);
+        seanceFormation.setCreneau(null);
         return seanceFormation;
     }
 }
