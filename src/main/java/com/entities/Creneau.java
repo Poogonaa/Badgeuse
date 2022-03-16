@@ -10,7 +10,8 @@ import java.util.List;
 public class Creneau {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cre_id;
-    private String date_heure;
+    private String heure_debut;
+    private String date;
     private Integer duree;
     private String type;
     private  String salle;

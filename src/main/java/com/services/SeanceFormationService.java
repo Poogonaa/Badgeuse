@@ -19,6 +19,8 @@ public interface SeanceFormationService {
 
     List<SeanceFormationDto> getAllSeancesFormationsEffectueesByIntervenant(Long id);
 
+    List<SeanceFormationDto> getAllSeancesFormationsValide();
+
     SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFromationDto);
 
     SeanceFormationDto newSeanceFormation(SeanceFormationDto seanceFormationDto);

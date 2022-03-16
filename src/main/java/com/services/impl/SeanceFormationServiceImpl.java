@@ -80,6 +80,17 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     }
 
     @Override
+    public List<SeanceFormationDto> getAllSeancesFormationsValide(){
+        List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = new ArrayList<>();
+        for (SeanceFormation seance : seanceFormations){
+            if(seance.getValide())
+                seanceFormationDtos.add(seanceFormationEntityToDto(seance));
+        }
+        return seanceFormationDtos;
+    }
+
+    @Override
     public SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFormationDto) {
         SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("seance not found"));
         seanceFormation.setEstEffectue(seanceFormationDto.getEstEffectue());
@@ -169,7 +180,8 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         if(!seanceFormation.getCreneau().equals(null)){
             CreneauDto creneauDto = new CreneauDto();
             creneauDto.setCre_id(seanceFormation.getCreneau().getCre_id());
-            creneauDto.setDate_heure(seanceFormation.getCreneau().getDate_heure());
+            creneauDto.setDate(seanceFormation.getCreneau().getDate());
+            creneauDto.setHeure_debut(seanceFormation.getCreneau().getHeure_debut());
             creneauDto.setDuree(seanceFormation.getCreneau().getDuree());
             creneauDto.setType(seanceFormation.getCreneau().getType());
             creneauDto.setSalle(seanceFormation.getCreneau().getSalle());

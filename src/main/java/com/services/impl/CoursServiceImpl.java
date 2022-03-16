@@ -173,7 +173,8 @@ public class CoursServiceImpl implements CoursService {
         for(Creneau creneau : cours.getCreneaux()){
             CreneauDto creneauDto = new CreneauDto();
             creneauDto.setCre_id(creneau.getCre_id());
-            creneauDto.setDate_heure(creneau.getDate_heure());
+            creneauDto.setDate(creneau.getDate());
+            creneauDto.setHeure_debut(creneau.getHeure_debut());
             creneauDto.setDuree(creneau.getDuree());
             creneauDto.setType(creneau.getType());
             creneauDto.setSalle(creneau.getSalle());
