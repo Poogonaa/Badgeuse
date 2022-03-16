@@ -1,5 +1,7 @@
 package com.services;
 
+import com.dtos.CreneauDto;
+import com.dtos.IntervenantDto;
 import com.dtos.SeanceFormationDto;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,15 @@ public interface SeanceFormationService {
 
     SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFromationDto);
 
-    SeanceFormationDto addSeanceFormation(SeanceFormationDto seanceFormationDto);
+    SeanceFormationDto newSeanceFormation(SeanceFormationDto seanceFormationDto);
+
+    SeanceFormationDto addIntervenant(SeanceFormationDto seanceFormationDto);
+
+    SeanceFormationDto addCreneau(SeanceFormationDto seanceFormationDto);
+
+    SeanceFormationDto removeIntervenant(SeanceFormationDto seanceFormationDto);
+
+    SeanceFormationDto removeCreneau(SeanceFormationDto seanceFormationDto);
 
     SeanceFormationDto valider(SeanceFormationDto seanceFormationDto);
 

@@ -1,6 +1,5 @@
 package com.controllers;
 
-import com.dtos.ComposanteDto;
 import com.dtos.CreneauDto;
 import com.services.impl.CreneauServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +37,26 @@ public class CreneauController {
 
     @PostMapping
     public CreneauDto addCreneau(final @RequestBody CreneauDto creneauDto){
-        return  creneauService.addCreneau(creneauDto);
+        return  creneauService.newCreneau(creneauDto);
+    }
+
+    @PutMapping("/addCours")
+    public CreneauDto addCours(final @RequestBody CreneauDto creneauDto){
+        return creneauService.addCours(creneauDto);
+    }
+
+    @PutMapping("/removeCours")
+    public CreneauDto removeCours(final @RequestBody CreneauDto creneauDto){
+        return creneauService.removeCours(creneauDto);
+    }
+
+    @PutMapping("/addSeanceFormation")
+    public CreneauDto addSeanceFormation(final @RequestBody CreneauDto creneauDto){
+        return creneauService.addSeanceFormation(creneauDto);
+    }
+
+    @PutMapping("/removeSeanceFormation")
+    public CreneauDto removeSeanceFormation(final @RequestBody CreneauDto creneauDto){
+        return creneauService.removeSeanceFormation(creneauDto);
     }
 }

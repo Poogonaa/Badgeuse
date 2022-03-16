@@ -2,30 +2,55 @@ package com.services.impl;
 
 import com.dtos.ResponsableDto;
 import com.dtos.UtilisateurDto;
-import com.entities.Responsable;
-import com.entities.Utilisateur;
+import com.entities.*;
+import com.repositories.ComposanteRepository;
 import com.repositories.UtilisateurRepository;
 import com.services.ResponsableService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service("responsableService")
 public class ResponsableServiceImpl extends UtilisateurServiceImpl implements ResponsableService {
+    protected final ComposanteRepository composanteRepository;
 
-
-    public ResponsableServiceImpl(UtilisateurRepository utilisateurRepository) {
+    public ResponsableServiceImpl(UtilisateurRepository utilisateurRepository, ComposanteRepository composanteRepository) {
         super(utilisateurRepository);
+        this.composanteRepository = composanteRepository;
     }
 
     @Override
-    public UtilisateurDto addResponsable(UtilisateurDto utilisateurDto) {
-        Utilisateur utilisateur = responsableDtoToEntity(utilisateurDto);
+    public UtilisateurDto newResponsable(ResponsableDto utilisateurDto) {
+        Responsable utilisateur = responsableDtoToEntity(utilisateurDto);
         utilisateur = utilisateurRepository.save(utilisateur);
         return responsableEntityToDto(utilisateur);
 
     }
 
-    private UtilisateurDto responsableEntityToDto(Utilisateur utilisateur){
-        UtilisateurDto utilisateurDto = new ResponsableDto();
+    @Override
+    public UtilisateurDto addComposante(ResponsableDto utilisateurDto) {
+        Responsable utilisateur = (Responsable) utilisateurRepository.findById(utilisateurDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        Composante composante = composanteRepository.findById(utilisateurDto.getComposanteDto().getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        utilisateur.setComposante(composante);
+        composante.addResponsable(utilisateur);
+        composanteRepository.save(composante);
+        utilisateur = utilisateurRepository.save(utilisateur);
+        return responsableEntityToDto(utilisateur);
+    }
+
+    @Override
+    public UtilisateurDto removeComposante(ResponsableDto utilisateurDto) {
+        Responsable utilisateur = (Responsable) utilisateurRepository.findById(utilisateurDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        Composante composante = composanteRepository.findById(utilisateurDto.getComposanteDto().getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
+        utilisateur.setComposante(null);
+        composante.removeResponsable(utilisateur);
+        composanteRepository.save(composante);
+        utilisateur = utilisateurRepository.save(utilisateur);
+        return responsableEntityToDto(utilisateur);
+    }
+
+    private ResponsableDto responsableEntityToDto(Utilisateur utilisateur){
+        ResponsableDto utilisateurDto = new ResponsableDto();
         utilisateurDto.setUti_id(utilisateur.getUti_id());
         utilisateur.setLogin(utilisateur.getLogin());
         utilisateurDto.setMdp(utilisateur.getMdp());
@@ -35,8 +60,8 @@ public class ResponsableServiceImpl extends UtilisateurServiceImpl implements Re
         return utilisateurDto;
     }
 
-    private Utilisateur responsableDtoToEntity(UtilisateurDto utilisateurDto){
-        Utilisateur utilisateur = new Responsable();
+    private Responsable responsableDtoToEntity(UtilisateurDto utilisateurDto){
+        Responsable utilisateur = new Responsable();
         utilisateur.setUti_id(utilisateurDto.getUti_id());
         utilisateur.setLogin(utilisateurDto.getLogin());
         utilisateur.setMdp(utilisateurDto.getMdp());
@@ -45,6 +70,4 @@ public class ResponsableServiceImpl extends UtilisateurServiceImpl implements Re
         utilisateur.setMail(utilisateurDto.getMail());
         return utilisateur;
     }
-
-
 }

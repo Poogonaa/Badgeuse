@@ -1,8 +1,11 @@
 package com.services.impl;
 
-import com.dtos.CoursDto;
-import com.entities.Cours;
+import com.dtos.*;
+import com.entities.*;
 import com.repositories.CoursRepository;
+import com.repositories.CreneauRepository;
+import com.repositories.Filiere_langueRepository;
+import com.repositories.IntervenantRepository;
 import com.services.CoursService;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +17,19 @@ import java.util.List;
 public class CoursServiceImpl implements CoursService {
 
     private final CoursRepository coursRepository;
+    private  final IntervenantRepository intervenantRepository;
+    private final Filiere_langueRepository filiere_langueRepository;
+    private final CreneauRepository creneauRepository;
 
-    public CoursServiceImpl(CoursRepository coursRepository){
+    public CoursServiceImpl(CoursRepository coursRepository, IntervenantRepository intervenantRepository, Filiere_langueRepository filiere_langueRepository, CreneauRepository creneauRepository){
         this.coursRepository = coursRepository;
+        this.intervenantRepository = intervenantRepository;
+        this.filiere_langueRepository = filiere_langueRepository;
+        this.creneauRepository = creneauRepository;
     }
 
     @Override
-    public CoursDto addCours(CoursDto coursDto) {
+    public CoursDto newCours(CoursDto coursDto) {
         Cours cours = coursDtoToEntity(coursDto);
         cours = coursRepository.save(cours);
         return coursEntityToDto(cours);
@@ -42,9 +51,9 @@ public class CoursServiceImpl implements CoursService {
     public List<CoursDto> getAllCours() {
         List<CoursDto> coursDtos = new ArrayList<>();
         List<Cours> cours = coursRepository.findAll();
-        cours.forEach(unCours -> {
+        for (Cours unCours : cours) {
             coursDtos.add(coursEntityToDto(unCours));
-        });
+        }
         return coursDtos;
     }
 
@@ -52,6 +61,72 @@ public class CoursServiceImpl implements CoursService {
     public CoursDto editCours(CoursDto coursDto){
         Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
         cours.setIntitule(coursDto.getIntitule());
+        cours = coursRepository.save(cours);
+        return coursEntityToDto(cours);
+    }
+
+    @Override
+    public CoursDto addIntervenant(CoursDto coursDto) {
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        Intervenant intervenant = intervenantRepository.findById(coursDto.getIntervenantDtos().get(0).getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        cours.addIntervenant(intervenant);
+        intervenant.addCours(cours);
+        intervenantRepository.save(intervenant);
+        cours = coursRepository.save(cours);
+        return coursEntityToDto(cours);
+    }
+
+    @Override
+    public CoursDto addFiliere_langue(CoursDto coursDto) {
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(coursDto.getFiliere_langueDtos().get(0).getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
+        cours.addFiliere_langue(filiere_langue);
+        filiere_langue.addCours(cours);
+        filiere_langueRepository.save(filiere_langue);
+        cours = coursRepository.save(cours);
+        return coursEntityToDto(cours);
+    }
+
+    @Override
+    public CoursDto addCreneau(CoursDto coursDto) {
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        Creneau creneau = creneauRepository.findById(coursDto.getCreneauDtos().get(0).getCre_id()).orElseThrow(() -> new EntityNotFoundException("Creneau not found"));
+        cours.addCreneau(creneau);
+        creneau.setCours(cours);
+        creneauRepository.save(creneau);
+        cours = coursRepository.save(cours);
+        return coursEntityToDto(cours);
+    }
+
+    @Override
+    public CoursDto removeIntervenant(CoursDto coursDto) {
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        Intervenant intervenant = intervenantRepository.findById(coursDto.getIntervenantDtos().get(0).getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        cours.removeIntervenant(intervenant);
+        intervenant.removeCours(cours);
+        intervenantRepository.save(intervenant);
+        cours = coursRepository.save(cours);
+        return coursEntityToDto(cours);
+    }
+
+    @Override
+    public CoursDto removeFiliere_langue(CoursDto coursDto) {
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        Filiere_langue filiere_langue = filiere_langueRepository.findById(coursDto.getFiliere_langueDtos().get(0).getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
+        cours.removeFiliere_langue(filiere_langue);
+        filiere_langue.removeCours(cours);
+        filiere_langueRepository.save(filiere_langue);
+        cours = coursRepository.save(cours);
+        return coursEntityToDto(cours);
+    }
+
+    @Override
+    public CoursDto removeCreneau(CoursDto coursDto) {
+        Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
+        Creneau creneau = creneauRepository.findById(coursDto.getCreneauDtos().get(0).getCre_id()).orElseThrow(() -> new EntityNotFoundException("Creneau not found"));
+        cours.removeCreneau(creneau);
+        creneau.setCours(null);
+        creneauRepository.save(creneau);
         cours = coursRepository.save(cours);
         return coursEntityToDto(cours);
     }

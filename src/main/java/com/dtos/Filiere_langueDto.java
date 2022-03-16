@@ -11,4 +11,12 @@ public class Filiere_langueDto {
     private String nom;
     private ComposanteDto composanteDto;
     private List<CoursDto> coursDtos;
+
+    public void addCoursDto(CoursDto coursDto){
+        this.coursDtos.add(coursDto);
+    }
+
+    public void removeCoursDto(CoursDto coursDto){
+        this.coursDtos.remove(coursDto);
+    }
 }

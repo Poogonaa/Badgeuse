@@ -1,9 +1,8 @@
 package com.controllers;
 
+import com.dtos.Filiere_langueDto;
 import com.dtos.SeanceFormationDto;
-import com.repositories.IntervenantRepository;
 import com.services.impl.SeanceFormationServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +24,11 @@ public class SeanceFormationController {
     @GetMapping("/{id}")
     public SeanceFormationDto getSeanceFormation(@PathVariable Long id){
         return seanceFormationService.getSeanceFormationById(id);
+    }
+
+    @PutMapping
+    public SeanceFormationDto editSeanceFormation(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.editSeanceFormation(seanceFormationDto);
     }
 
     @GetMapping("/intervenant/{id}")
@@ -49,7 +53,27 @@ public class SeanceFormationController {
 
     @PostMapping
     public SeanceFormationDto addSeanceFormation(final @RequestBody SeanceFormationDto seanceFormationDto){
-        return seanceFormationService.addSeanceFormation(seanceFormationDto);
+        return seanceFormationService.newSeanceFormation(seanceFormationDto);
+    }
+
+    @PutMapping("/addIntervenant")
+    public SeanceFormationDto addIntervenant(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.addIntervenant(seanceFormationDto);
+    }
+
+    @PutMapping("/removeIntervenant")
+    public SeanceFormationDto removeIntervenant(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.removeIntervenant(seanceFormationDto);
+    }
+
+    @PutMapping("/addCreneau")
+    public SeanceFormationDto addInCreneau(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.addCreneau(seanceFormationDto);
+    }
+
+    @PutMapping("/removeCreneau")
+    public SeanceFormationDto removeCreneau(final @RequestBody SeanceFormationDto seanceFormationDto){
+        return seanceFormationService.removeCreneau(seanceFormationDto);
     }
 
     @PutMapping("/valider")

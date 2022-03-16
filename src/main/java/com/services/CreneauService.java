@@ -1,11 +1,13 @@
 package com.services;
 
+import com.dtos.CoursDto;
 import com.dtos.CreneauDto;
+import com.dtos.SeanceFormationDto;
 
 import java.util.List;
 
 public interface CreneauService {
-    CreneauDto addCreneau(CreneauDto creneauDto);
+    CreneauDto newCreneau(CreneauDto creneauDto);
 
     CreneauDto getCreneauById(Long id);
 
@@ -14,4 +16,12 @@ public interface CreneauService {
     List<CreneauDto> getAllCreneaux();
 
     CreneauDto editCreneau(CreneauDto creneauDto);
+
+    CreneauDto addCours(CreneauDto creneauDto);
+
+    CreneauDto addSeanceFormation(CreneauDto creneauDto);
+
+    CreneauDto removeCours(CreneauDto creneauDto);
+
+    CreneauDto removeSeanceFormation(CreneauDto creneauDto);
 }
