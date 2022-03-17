@@ -70,8 +70,6 @@ public class CoursServiceImpl implements CoursService {
         Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         Intervenant intervenant = intervenantRepository.findById(coursDto.getIntervenantDtos().get(0).getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
         cours.addIntervenant(intervenant);
-        intervenant.addCours(cours);
-        intervenantRepository.save(intervenant);
         cours = coursRepository.save(cours);
         return coursEntityToDto(cours);
     }
@@ -81,8 +79,6 @@ public class CoursServiceImpl implements CoursService {
         Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         Filiere_langue filiere_langue = filiere_langueRepository.findById(coursDto.getFiliere_langueDtos().get(0).getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
         cours.addFiliere_langue(filiere_langue);
-        filiere_langue.addCours(cours);
-        filiere_langueRepository.save(filiere_langue);
         cours = coursRepository.save(cours);
         return coursEntityToDto(cours);
     }
@@ -103,8 +99,6 @@ public class CoursServiceImpl implements CoursService {
         Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         Intervenant intervenant = intervenantRepository.findById(coursDto.getIntervenantDtos().get(0).getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
         cours.removeIntervenant(intervenant);
-        intervenant.removeCours(cours);
-        intervenantRepository.save(intervenant);
         cours = coursRepository.save(cours);
         return coursEntityToDto(cours);
     }
@@ -114,8 +108,6 @@ public class CoursServiceImpl implements CoursService {
         Cours cours = coursRepository.findById(coursDto.getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         Filiere_langue filiere_langue = filiere_langueRepository.findById(coursDto.getFiliere_langueDtos().get(0).getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
         cours.removeFiliere_langue(filiere_langue);
-        filiere_langue.removeCours(cours);
-        filiere_langueRepository.save(filiere_langue);
         cours = coursRepository.save(cours);
         return coursEntityToDto(cours);
     }

@@ -135,7 +135,7 @@ public class CreneauServiceImpl implements CreneauService {
         creneauDto.setType(creneau.getType());
         creneauDto.setSalle(creneau.getSalle());
 
-        if(!creneau.getCours().equals(null)){
+        if(creneau.getCours() != null){
             CoursDto coursDto = new CoursDto();
             coursDto.setCou_id(creneau.getCours().getCou_id());
             coursDto.setIntitule(creneau.getCours().getIntitule());

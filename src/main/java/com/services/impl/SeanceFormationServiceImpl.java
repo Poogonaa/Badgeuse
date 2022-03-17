@@ -166,7 +166,7 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormationDto.setEstEffectue(seanceFormation.getEstEffectue());
         seanceFormationDto.setCommentaire(seanceFormation.getCommentaire());
 
-        if(!seanceFormation.getIntervenant().equals(null)){
+        if(seanceFormation.getIntervenant() != null){
             IntervenantDto intervenantDto = new IntervenantDto();
             intervenantDto.setUti_id(seanceFormation.getIntervenant().getUti_id());
             intervenantDto.setLogin(seanceFormation.getIntervenant().getLogin());
@@ -177,7 +177,7 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
             seanceFormationDto.setIntervenantDto(intervenantDto);
         }
 
-        if(!seanceFormation.getCreneau().equals(null)){
+        if(seanceFormation.getCreneau() != null){
             CreneauDto creneauDto = new CreneauDto();
             creneauDto.setCre_id(seanceFormation.getCreneau().getCre_id());
             creneauDto.setDate(seanceFormation.getCreneau().getDate());
