@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SeanceFormationService {
     SeanceFormationDto getSeanceFormationById(Long id);
@@ -20,6 +21,8 @@ public interface SeanceFormationService {
     List<SeanceFormationDto> getAllSeancesFormationsEffectueesByIntervenant(Long id);
 
     List<SeanceFormationDto> getAllSeancesFormationsValide();
+
+    Map<Long, Integer> getHeureIntervenants();
 
     SeanceFormationDto editSeanceFormation(SeanceFormationDto seanceFromationDto);
 
