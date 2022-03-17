@@ -30,6 +30,7 @@ public class IntervenantController {
         return intervenantService.getAllIntervenants();
     }
 
+
     @PutMapping
     public IntervenantDto editIntervenant(final @RequestBody IntervenantDto intervenantDto){
         return intervenantService.editIntervenant(intervenantDto);

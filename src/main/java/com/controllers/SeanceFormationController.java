@@ -6,6 +6,7 @@ import com.services.impl.SeanceFormationServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("seancesformations")
@@ -44,6 +45,11 @@ public class SeanceFormationController {
     @GetMapping("/valide/intervenant")
     public List<SeanceFormationDto> getSeanceFormationValide(){
         return seanceFormationService.getAllSeancesFormationsValide();
+    }
+
+    @GetMapping("/heures")
+    public Map<Long, Integer> getHeureIntervenants(){
+        return seanceFormationService.getHeureIntervenants();
     }
 
     @DeleteMapping("/{id}")

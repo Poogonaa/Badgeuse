@@ -12,9 +12,7 @@ import com.services.SeanceFormationService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service("seanceFormationService")
 public class SeanceFormationServiceImpl implements SeanceFormationService {
@@ -70,11 +68,9 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
         List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
         //on enlève ceux qui n'ont pas pour Intervenant ciblé ou qui ne sont pas effectuées.
-        for(int i = 0 ; i < seanceFormations.size() ; i++){
-            SeanceFormation seance = seanceFormations.get(i);
+        for(SeanceFormation seance : seanceFormations){
             if(Objects.equals(seance.getIntervenant().getUti_id(), id) && seance.getEstEffectue())
                 seanceFormationDtos.add(seanceFormationEntityToDto(seance));
-            i++;
         }
         return seanceFormationDtos;
     }
@@ -82,12 +78,32 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     @Override
     public List<SeanceFormationDto> getAllSeancesFormationsValide(){
         List<SeanceFormationDto> seanceFormationDtos = new ArrayList<>();
-        List<SeanceFormation> seanceFormations = new ArrayList<>();
+        List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
         for (SeanceFormation seance : seanceFormations){
-            if(seance.getValide())
+            if(seance.getValide() != null && seance.getValide())
                 seanceFormationDtos.add(seanceFormationEntityToDto(seance));
         }
         return seanceFormationDtos;
+    }
+
+    @Override
+    public Map<Long, Integer> getHeureIntervenants(){
+        Map<Long, Integer> listHeuresIntervenants = new HashMap<Long, Integer>();
+        List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
+        for(SeanceFormation seance : seanceFormations){
+            //on ajoute dans la liste, seulement si la séance est validée
+            if(seance.getValide() != null && seance.getValide()){
+                //si l'intervenant n'existe pas dans la map, on le rajoute
+                if(!listHeuresIntervenants.containsKey(seance.getIntervenant().getUti_id())){
+                    listHeuresIntervenants.put(seance.getIntervenant().getUti_id(), 0);
+                }
+                //puis, on rajoute le temps effectué
+                Integer nbHeures = listHeuresIntervenants.get(seance.getIntervenant().getUti_id());
+                nbHeures += seance.getDureeEffective();
+                listHeuresIntervenants.put(seance.getIntervenant().getUti_id(), nbHeures);
+            }
+        }
+        return listHeuresIntervenants;
     }
 
     @Override
