@@ -37,8 +37,6 @@ public class IntervenantServiceImpl implements IntervenantService {
         Intervenant intervenant = intervenantRepository.findById(intervenantDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
         Cours cours = coursRepository.findById(intervenantDto.getCoursDtos().get(0).getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         intervenant.addCours(cours);
-        cours.addIntervenant(intervenant);
-        coursRepository.save(cours);
         intervenant = intervenantRepository.save(intervenant);
         return intervenantEntityToDto(intervenant);
     }
@@ -59,8 +57,6 @@ public class IntervenantServiceImpl implements IntervenantService {
         Intervenant intervenant = intervenantRepository.findById(intervenantDto.getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
         Cours cours = coursRepository.findById(intervenantDto.getCoursDtos().get(0).getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         intervenant.removeCours(cours);
-        cours.removeIntervenant(intervenant);
-        coursRepository.save(cours);
         intervenant = intervenantRepository.save(intervenant);
         return intervenantEntityToDto(intervenant);
     }
