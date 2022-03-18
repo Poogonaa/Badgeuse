@@ -8,6 +8,7 @@ import com.entities.Filiere_langue;
 import com.entities.Responsable;
 import com.repositories.ComposanteRepository;
 import com.repositories.Filiere_langueRepository;
+import com.repositories.ResponsableRepository;
 import com.repositories.UtilisateurRepository;
 import com.services.ComposanteService;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,12 @@ import java.util.List;
 public class ComposanteServiceImpl implements ComposanteService {
     protected final ComposanteRepository composanteRepository;
     protected final Filiere_langueRepository filiere_langueRepository;
-    protected final UtilisateurRepository utilisateurRepository;
+    protected final ResponsableRepository responsableRepository;
 
-    public ComposanteServiceImpl(ComposanteRepository composanteRepository, Filiere_langueRepository filiere_langueRepository, UtilisateurRepository utilisateurRepository) {
+    public ComposanteServiceImpl(ComposanteRepository composanteRepository, Filiere_langueRepository filiere_langueRepository, ResponsableRepository responsableRepository) {
         this.composanteRepository = composanteRepository;
         this.filiere_langueRepository = filiere_langueRepository;
-        this.utilisateurRepository = utilisateurRepository;
+        this.responsableRepository = responsableRepository;
     }
 
     @Override
@@ -78,10 +79,10 @@ public class ComposanteServiceImpl implements ComposanteService {
     @Override
     public ComposanteDto addResponsable(ComposanteDto composanteDto) {
         Composante composante = composanteRepository.findById(composanteDto.getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
-        Responsable responsable = (Responsable) utilisateurRepository.findById(composanteDto.getFiliere_langueDtos().get(0).getFil_id()).orElseThrow(() -> new EntityNotFoundException("Responsable not found"));
+        Responsable responsable = responsableRepository.findById(composanteDto.getResponsableDtos().get(0).getUti_id()).orElseThrow(() -> new EntityNotFoundException("Responsable not found"));
         composante.addResponsable(responsable);
         responsable.setComposante(composante);
-        utilisateurRepository.save(responsable);
+        responsableRepository.save(responsable);
         composante = composanteRepository.save(composante);
         return composanteEntityToDto(composante);
     }
@@ -100,10 +101,10 @@ public class ComposanteServiceImpl implements ComposanteService {
     @Override
     public ComposanteDto removeResponsable(ComposanteDto composanteDto) {
         Composante composante = composanteRepository.findById(composanteDto.getCom_id()).orElseThrow(() -> new EntityNotFoundException("Composante not found"));
-        Responsable responsable = (Responsable) utilisateurRepository.findById(composanteDto.getFiliere_langueDtos().get(0).getFil_id()).orElseThrow(() -> new EntityNotFoundException("Responsable not found"));
+        Responsable responsable = responsableRepository.findById(composanteDto.getResponsableDtos().get(0).getUti_id()).orElseThrow(() -> new EntityNotFoundException("Responsable not found"));
         composante.removeResponsable(responsable);
         responsable.setComposante(null);
-        utilisateurRepository.save(responsable);
+        responsableRepository.save(responsable);
         composante = composanteRepository.save(composante);
         return composanteEntityToDto(composante);
     }

@@ -1,5 +1,6 @@
 package com.services.impl;
 
+import com.dtos.CoursDto;
 import com.dtos.CreneauDto;
 import com.dtos.IntervenantDto;
 import com.dtos.SeanceFormationDto;
@@ -12,9 +13,7 @@ import com.services.SeanceFormationService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service("seanceFormationService")
 public class SeanceFormationServiceImpl implements SeanceFormationService {
@@ -86,6 +85,26 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
                 seanceFormationDtos.add(seanceFormationEntityToDto(seance));
         }
         return seanceFormationDtos;
+    }
+
+    @Override
+    public Map<Long, Integer> getHeureIntervenants(){
+        Map<Long, Integer> listHeuresIntervenants = new HashMap<Long, Integer>();
+        List<SeanceFormation> seanceFormations = seanceFormationRepository.findAll();
+        for(SeanceFormation seance : seanceFormations){
+            //on ajoute dans la liste, seulement si la séance est validée
+            if(seance.getValide() != null && seance.getValide()){
+                //si l'intervenant n'existe pas dans la map, on le rajoute
+                if(!listHeuresIntervenants.containsKey(seance.getIntervenant().getUti_id())){
+                    listHeuresIntervenants.put(seance.getIntervenant().getUti_id(), 0);
+                }
+                //puis, on rajoute le temps effectué
+                Integer nbHeures = listHeuresIntervenants.get(seance.getIntervenant().getUti_id());
+                nbHeures += seance.getDureeEffective();
+                listHeuresIntervenants.put(seance.getIntervenant().getUti_id(), nbHeures);
+            }
+        }
+        return listHeuresIntervenants;
     }
 
     @Override
@@ -183,6 +202,14 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
             creneauDto.setDuree(seanceFormation.getCreneau().getDuree());
             creneauDto.setType(seanceFormation.getCreneau().getType());
             creneauDto.setSalle(seanceFormation.getCreneau().getSalle());
+
+            if(seanceFormation.getCreneau().getCours() != null){
+                CoursDto coursDto = new CoursDto();
+                coursDto.setCou_id(seanceFormation.getCreneau().getCours().getCou_id());
+                coursDto.setIntitule(seanceFormation.getCreneau().getCours().getIntitule());
+                creneauDto.setCoursDto(coursDto);
+            }
+
             seanceFormationDto.setCreneauDto(creneauDto);
         }
         return seanceFormationDto;
@@ -195,8 +222,29 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormation.setValide(seanceFormationDto.getValide());
         seanceFormation.setEstEffectue(seanceFormationDto.getEstEffectue());
         seanceFormation.setCommentaire(seanceFormationDto.getCommentaire());
-        seanceFormation.setIntervenant(null);
-        seanceFormation.setCreneau(null);
+
+        if(seanceFormationDto.getIntervenantDto() != null){
+            Intervenant intervenant = new Intervenant();
+            intervenant.setUti_id(seanceFormationDto.getIntervenantDto().getUti_id());
+            intervenant.setLogin(seanceFormationDto.getIntervenantDto().getLogin());
+            intervenant.setMdp(seanceFormationDto.getIntervenantDto().getMdp());
+            intervenant.setNom(seanceFormationDto.getIntervenantDto().getNom());
+            intervenant.setPrenom(seanceFormationDto.getIntervenantDto().getPrenom());
+            intervenant.setMail(seanceFormationDto.getIntervenantDto().getMail());
+            seanceFormation.setIntervenant(intervenant);
+        }
+
+        if(seanceFormationDto.getCreneauDto() != null){
+            Creneau creneau = new Creneau();
+            creneau.setCre_id(seanceFormationDto.getCreneauDto().getCre_id());
+            creneau.setDate(seanceFormationDto.getCreneauDto().getDate());
+            creneau.setHeure_debut(seanceFormationDto.getCreneauDto().getHeure_debut());
+            creneau.setDuree(seanceFormationDto.getCreneauDto().getDuree());
+            creneau.setType(seanceFormationDto.getCreneauDto().getType());
+            creneau.setSalle(seanceFormationDto.getCreneauDto().getSalle());
+            seanceFormation.setCreneau(creneau);
+        }
+
         return seanceFormation;
     }
 }

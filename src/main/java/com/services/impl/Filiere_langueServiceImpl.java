@@ -83,8 +83,6 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
         Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
         Cours cours = coursRepository.findById(filiere_langueDto.getCoursDtos().get(0).getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         filiere_langue.addCours(cours);
-        cours.addFiliere_langue(filiere_langue);
-        coursRepository.save(cours);
         filiere_langue = filiere_langueRepository.save(filiere_langue);
         return filiere_langueEntityToDto(filiere_langue);
     }
@@ -105,8 +103,6 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
         Filiere_langue filiere_langue = filiere_langueRepository.findById(filiere_langueDto.getFil_id()).orElseThrow(() -> new EntityNotFoundException("Filiere_langue not found"));
         Cours cours = coursRepository.findById(filiere_langueDto.getCoursDtos().get(0).getCou_id()).orElseThrow(() -> new EntityNotFoundException("Cours not found"));
         filiere_langue.removeCours(cours);
-        cours.removeFiliere_langue(filiere_langue);
-        coursRepository.save(cours);
         filiere_langue = filiere_langueRepository.save(filiere_langue);
         return filiere_langueEntityToDto(filiere_langue);
     }
@@ -127,7 +123,7 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
         filiere_langueDto.setCode(filiere_langue.getCode());
         filiere_langueDto.setNom(filiere_langue.getNom());
 
-        if(!filiere_langue.getComposante().equals(null)){
+        if(filiere_langue.getComposante() != null){
             ComposanteDto composanteDto = new ComposanteDto();
             composanteDto.setCom_id(filiere_langue.getComposante().getCom_id());
             composanteDto.setNomComposante(filiere_langue.getComposante().getNomComposante());

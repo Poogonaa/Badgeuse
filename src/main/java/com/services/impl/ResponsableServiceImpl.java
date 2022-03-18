@@ -97,7 +97,7 @@ public class ResponsableServiceImpl implements ResponsableService {
         responsableDto.setMail(responsable.getMail());
         responsableDto.setDtype(responsable.getDtype());
 
-        if(!responsable.getComposante().equals(null)){
+        if(responsable.getComposante() != null){
             ComposanteDto composanteDto = new ComposanteDto();
             composanteDto.setCom_id(responsable.getComposante().getCom_id());
             composanteDto.setNomComposante(responsable.getComposante().getNomComposante());

@@ -131,6 +131,9 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
+    /**
+     * Rajoute deux créneaux d'anglais (un Tp et un Td le même jour)
+     */
     private void loadCreneauData(){
         if (creneauRepository.count() == 0) {
             Creneau anglais_matin = new Creneau();
@@ -153,6 +156,9 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
+    /**
+     *
+     */
     private void loadSeanceData(){
         if (seanceRepository.count() == 0) {
             SeanceFormation seanceEffectue = new SeanceFormation();
@@ -178,6 +184,14 @@ public class DataLoader implements CommandLineRunner {
             seanceValide.setEstEffectue(true);
             seanceValide.setValide(true);
             seanceRepository.save(seanceValide);
+
+            SeanceFormation seanceValide2 = new SeanceFormation();
+            seanceValide2.setCreneau(creneauRepository.getById(new Long(2)));
+            seanceValide2.setDureeEffective(60);
+            seanceValide2.setIntervenant(interRepository.getById(new Long(3)));
+            seanceValide2.setEstEffectue(true);
+            seanceValide2.setValide(true);
+            seanceRepository.save(seanceValide2);
 
             SeanceFormation seanceNonValide = new SeanceFormation();
             seanceNonValide.setCreneau(creneauRepository.getById(new Long(2)));
