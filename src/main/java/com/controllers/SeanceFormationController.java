@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("seancesformations")
+@RequestMapping("/seancesformations")
 public class SeanceFormationController {
 
     private final SeanceFormationServiceImpl seanceFormationService;
