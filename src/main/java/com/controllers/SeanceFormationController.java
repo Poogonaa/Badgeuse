@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("seancesformations")
+@RequestMapping("/seancesformations")
 public class SeanceFormationController {
 
     private final SeanceFormationServiceImpl seanceFormationService;
