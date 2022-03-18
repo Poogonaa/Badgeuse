@@ -128,7 +128,7 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     @Override
     public SeanceFormationDto addIntervenant(SeanceFormationDto seanceFormationDto) {
         SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
-        Intervenant intervenant = (Intervenant) intervenantRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        Intervenant intervenant = intervenantRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
         seanceFormation.setIntervenant(intervenant);
         intervenant.addSeanceFormation(seanceFormation);
         seanceFormationRepository.save(seanceFormation);
@@ -150,7 +150,7 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
     @Override
     public SeanceFormationDto removeIntervenant(SeanceFormationDto seanceFormationDto) {
         SeanceFormation seanceFormation = seanceFormationRepository.findById(seanceFormationDto.getSea_id()).orElseThrow(() -> new EntityNotFoundException("SeanceFormation not found"));
-        Intervenant intervenant = (Intervenant) intervenantRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
+        Intervenant intervenant = intervenantRepository.findById(seanceFormationDto.getIntervenantDto().getUti_id()).orElseThrow(() -> new EntityNotFoundException("Intervenant not found"));
         seanceFormation.setIntervenant(null);
         intervenant.removeSeanceFormation(seanceFormation);
         intervenantRepository.save(intervenant);

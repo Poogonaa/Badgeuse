@@ -127,6 +127,7 @@ public class Filiere_langueServiceImpl implements Filiere_langueService {
             ComposanteDto composanteDto = new ComposanteDto();
             composanteDto.setCom_id(filiere_langue.getComposante().getCom_id());
             composanteDto.setNomComposante(filiere_langue.getComposante().getNomComposante());
+            filiere_langueDto.setComposanteDto(composanteDto);
         }
 
         List<CoursDto> coursDtos = new ArrayList<>();
