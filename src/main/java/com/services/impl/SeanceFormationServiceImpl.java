@@ -1,5 +1,6 @@
 package com.services.impl;
 
+import com.dtos.CoursDto;
 import com.dtos.CreneauDto;
 import com.dtos.IntervenantDto;
 import com.dtos.SeanceFormationDto;
@@ -201,6 +202,14 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
             creneauDto.setDuree(seanceFormation.getCreneau().getDuree());
             creneauDto.setType(seanceFormation.getCreneau().getType());
             creneauDto.setSalle(seanceFormation.getCreneau().getSalle());
+
+            if(seanceFormation.getCreneau().getCours() != null){
+                CoursDto coursDto = new CoursDto();
+                coursDto.setCou_id(seanceFormation.getCreneau().getCours().getCou_id());
+                coursDto.setIntitule(seanceFormation.getCreneau().getCours().getIntitule());
+                creneauDto.setCoursDto(coursDto);
+            }
+
             seanceFormationDto.setCreneauDto(creneauDto);
         }
         return seanceFormationDto;
@@ -213,8 +222,29 @@ public class SeanceFormationServiceImpl implements SeanceFormationService {
         seanceFormation.setValide(seanceFormationDto.getValide());
         seanceFormation.setEstEffectue(seanceFormationDto.getEstEffectue());
         seanceFormation.setCommentaire(seanceFormationDto.getCommentaire());
-        seanceFormation.setIntervenant(null);
-        seanceFormation.setCreneau(null);
+
+        if(seanceFormationDto.getIntervenantDto() != null){
+            Intervenant intervenant = new Intervenant();
+            intervenant.setUti_id(seanceFormationDto.getIntervenantDto().getUti_id());
+            intervenant.setLogin(seanceFormationDto.getIntervenantDto().getLogin());
+            intervenant.setMdp(seanceFormationDto.getIntervenantDto().getMdp());
+            intervenant.setNom(seanceFormationDto.getIntervenantDto().getNom());
+            intervenant.setPrenom(seanceFormationDto.getIntervenantDto().getPrenom());
+            intervenant.setMail(seanceFormationDto.getIntervenantDto().getMail());
+            seanceFormation.setIntervenant(intervenant);
+        }
+
+        if(seanceFormationDto.getCreneauDto() != null){
+            Creneau creneau = new Creneau();
+            creneau.setCre_id(seanceFormationDto.getCreneauDto().getCre_id());
+            creneau.setDate(seanceFormationDto.getCreneauDto().getDate());
+            creneau.setHeure_debut(seanceFormationDto.getCreneauDto().getHeure_debut());
+            creneau.setDuree(seanceFormationDto.getCreneauDto().getDuree());
+            creneau.setType(seanceFormationDto.getCreneauDto().getType());
+            creneau.setSalle(seanceFormationDto.getCreneauDto().getSalle());
+            seanceFormation.setCreneau(creneau);
+        }
+
         return seanceFormation;
     }
 }
